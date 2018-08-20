@@ -12,19 +12,14 @@ namespace WebApplication1.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Cliente
+    public partial class Servicios
     {
-        public int idCliente { get; set; }
-        public string nombreCliente { get; set; }
-        public string apellidos { get; set; }
-        public string identificacion { get; set; }
+        public int idServicio { get; set; }
+        public string nombre { get; set; }
+        public int cuenta { get; set; }
         public string estado { get; set; }
-        public string email { get; set; }
-        public string direccion { get; set; }
-        public string telefono { get; set; }
-        public string usuarioCliente { get; set; }
-        public string contrasenaCliente { get; set; }
+        public int monto { get; set; }
     
-        public virtual Cuenta Cuenta { get; set; }
+        public virtual Transaccion Transaccion { get; set; }
     }
 }

@@ -1,10 +1,4 @@
-﻿@{
-    ViewBag.Title = "Clientes";
-}
-
-
-<h2>@ViewBag.Title.</h2>
-
+﻿
 
 <!DOCTYPE html>
 
@@ -12,17 +6,33 @@
 
 <body>
 
-    <div class="container">
+    <div>
 
-        <a href="/Cliente/AgregarCliente">Agregar Cliente</a>
-    </div>
-    <div class="container">
+        <table class="table">
+            <tr>
+                <th>
+                     <p>
+                          Agregar Cliente
+                           @Html.ActionLink("Create","Index", "Clientes")
+                        </p>      
+                </th>
+                <th>
+                    <<p>
+                       Inactivar Cliente
+                        @Html.ActionLink("InactivarEstado", "Index", "Clientes")
+                    </p>
+                   
+                </th>
+                <th>
+                    <p>
+                        Actualizar Cliente
+                        @Html.ActionLink("Edit","Index", "Clientes")
+                    </p>
+                </th>
+            </tr>
 
-        <a href="#">Inactivar Cliente</a>
+        </table>
     </div>
-    <div class="container">
-
-        <a href="">Actualizar Cliente</a>
-    </div>
+     
 </body>
 </html>

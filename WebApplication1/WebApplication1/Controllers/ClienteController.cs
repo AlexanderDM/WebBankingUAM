@@ -16,7 +16,7 @@ namespace WebApplication1.Controllers
 
             clie.nombreCliente = "viviana Fernandez";
             clie.identificacion = "16545987";
-            clie.numCuenta = "20002010012351";
+            
             clie.estado = "Activo";
             clie.email = "Viviana.fernandez@gmail.com";
             clie.direccion = "San José,Guadalupe";
