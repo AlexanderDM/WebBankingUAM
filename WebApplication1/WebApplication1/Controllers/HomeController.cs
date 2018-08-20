@@ -26,5 +26,20 @@ namespace WebApplication1.Controllers
 
             return View();
         }
+        public ActionResult Mantenimiento()
+        {
+            ViewBag.Message = "LOL";
+
+            return View();
+        }
+
+        public ActionResult OpcCliente()
+        {
+            ViewBag.Message = "Opciones de Clientes";
+
+            return View();
+        }
+
+
     }
 }
