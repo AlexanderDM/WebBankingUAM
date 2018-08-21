@@ -19,7 +19,5 @@ namespace WebApplication1.Models
         public string usuario { get; set; }
         public string contrasena { get; set; }
         public string estado { get; set; }
-    
-        public virtual Banco Banco { get; set; }
     }
 }

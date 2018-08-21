@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8964f77d00854bc6a923ced72f5a4164" Name="Diagram1">
+        <EntityTypeShape EntityType="WebBankingModel.Banco" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBankingModel.Cliente" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBankingModel.Cuenta" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBankingModel.Servicios" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBankingModel.Transaccion" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBankingModel.Usuarios" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="WebBankingModel.FK_Cuenta_Banco" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBankingModel.FK_Cuenta_Cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBankingModel.FK_Transaccion_Cuenta" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBankingModel.FK_Transaccion_Servicios" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

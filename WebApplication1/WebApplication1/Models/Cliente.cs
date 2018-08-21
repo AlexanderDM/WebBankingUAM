@@ -14,6 +14,12 @@ namespace WebApplication1.Models
     
     public partial class Cliente
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Cliente()
+        {
+            this.Cuenta = new HashSet<Cuenta>();
+        }
+    
         public int idCliente { get; set; }
         public string nombreCliente { get; set; }
         public string apellidos { get; set; }
@@ -25,6 +31,7 @@ namespace WebApplication1.Models
         public string usuarioCliente { get; set; }
         public string contrasenaCliente { get; set; }
     
-        public virtual Cuenta Cuenta { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cuenta> Cuenta { get; set; }
     }
 }

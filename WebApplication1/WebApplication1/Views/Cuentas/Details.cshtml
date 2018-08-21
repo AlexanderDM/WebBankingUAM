@@ -1,0 +1,66 @@
+﻿@model WebApplication1.Models.Cuenta
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Cuenta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.numCuenta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numCuenta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.saldo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.saldo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.direccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.direccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Banco1.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Banco1.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cliente.nombreCliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cliente.nombreCliente)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idCuenta }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

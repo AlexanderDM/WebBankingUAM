@@ -13,10 +13,10 @@ namespace WebApplication1.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class WebBankingEntities1 : DbContext
+    public partial class WebBankingEntities2 : DbContext
     {
-        public WebBankingEntities1()
-            : base("name=WebBankingEntities1")
+        public WebBankingEntities2()
+            : base("name=WebBankingEntities2")
         {
         }
     

@@ -4,14 +4,15 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="WebBankingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="WebBankingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Banco">
           <Key>
             <PropertyRef Name="idBanco" />
           </Key>
           <Property Name="idBanco" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usuario" Type="int" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="sucursal" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sucursal" Type="varchar" MaxLength="15" Nullable="false" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
@@ -34,19 +35,19 @@
           </Key>
           <Property Name="idCuenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="numCuenta" Type="int" Nullable="false" />
-          <Property Name="propietario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="banco" Type="int" Nullable="false" />
+          <Property Name="propietarioCuenta" Type="int" Nullable="false" />
           <Property Name="saldo" Type="int" Nullable="false" />
-          <Property Name="estado" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="direccion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="direccion" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Servicios">
           <Key>
             <PropertyRef Name="idServicio" />
           </Key>
           <Property Name="idServicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="cuenta" Type="int" Nullable="false" />
-          <Property Name="estado" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="numCuenta" Type="int" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="monto" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Transaccion">
@@ -54,10 +55,11 @@
             <PropertyRef Name="idTransaccion" />
           </Key>
           <Property Name="idTransaccion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="fecha_hora" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
           <Property Name="cuentaOrigen" Type="int" Nullable="false" />
           <Property Name="cuentaDestino" Type="int" Nullable="false" />
-          <Property Name="monto" Type="float" Nullable="false" />
+          <Property Name="servicio" Type="int" Nullable="false" />
+          <Property Name="fechaHora" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="monto" Type="int" Nullable="false" />
           <Property Name="detalle" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuarios">
@@ -70,63 +72,51 @@
           <Property Name="contrasena" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="estado" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Banco_Usuarios">
-          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
-          <End Role="Banco" Type="Self.Banco" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Usuarios">
-              <PropertyRef Name="idUsuario" />
-            </Principal>
-            <Dependent Role="Banco">
-              <PropertyRef Name="idBanco" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Cuenta_Banco">
           <End Role="Banco" Type="Self.Banco" Multiplicity="1" />
-          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="0..1" />
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Banco">
               <PropertyRef Name="idBanco" />
             </Principal>
             <Dependent Role="Cuenta">
-              <PropertyRef Name="idCuenta" />
+              <PropertyRef Name="banco" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Cuenta_Cliente">
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
-          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="0..1" />
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cliente">
               <PropertyRef Name="idCliente" />
             </Principal>
             <Dependent Role="Cuenta">
-              <PropertyRef Name="idCuenta" />
+              <PropertyRef Name="propietarioCuenta" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Transaccion_Cuenta">
           <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="1" />
-          <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="0..1" />
+          <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cuenta">
               <PropertyRef Name="idCuenta" />
             </Principal>
             <Dependent Role="Transaccion">
-              <PropertyRef Name="idTransaccion" />
+              <PropertyRef Name="cuentaOrigen" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Transaccion_Servicios">
           <End Role="Servicios" Type="Self.Servicios" Multiplicity="1" />
-          <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="0..1" />
+          <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Servicios">
               <PropertyRef Name="idServicio" />
             </Principal>
             <Dependent Role="Transaccion">
-              <PropertyRef Name="idTransaccion" />
+              <PropertyRef Name="servicio" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -137,10 +127,6 @@
           <EntitySet Name="Servicios" EntityType="Self.Servicios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaccion" EntityType="Self.Transaccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Banco_Usuarios" Association="Self.FK_Banco_Usuarios">
-            <End Role="Usuarios" EntitySet="Usuarios" />
-            <End Role="Banco" EntitySet="Banco" />
-          </AssociationSet>
           <AssociationSet Name="FK_Cuenta_Banco" Association="Self.FK_Cuenta_Banco">
             <End Role="Banco" EntitySet="Banco" />
             <End Role="Cuenta" EntitySet="Cuenta" />
@@ -158,7 +144,8 @@
             <End Role="Transaccion" EntitySet="Transaccion" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WebBankingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -167,10 +154,9 @@
             <PropertyRef Name="idBanco" />
           </Key>
           <Property Name="idBanco" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario" Type="Int32" Nullable="false" />
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="sucursal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="saldoTotal" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Banco_Usuarios" FromRole="Banco" ToRole="Usuarios" />
+          <Property Name="sucursal" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Cuenta" Relationship="Self.FK_Cuenta_Banco" FromRole="Banco" ToRole="Cuenta" />
         </EntityType>
         <EntityType Name="Cliente">
@@ -195,11 +181,12 @@
           </Key>
           <Property Name="idCuenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="numCuenta" Type="Int32" Nullable="false" />
-          <Property Name="propietario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="banco" Type="Int32" Nullable="false" />
+          <Property Name="propietarioCuenta" Type="Int32" Nullable="false" />
           <Property Name="saldo" Type="Int32" Nullable="false" />
-          <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Banco" Relationship="Self.FK_Cuenta_Banco" FromRole="Cuenta" ToRole="Banco" />
+          <Property Name="estado" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Banco1" Relationship="Self.FK_Cuenta_Banco" FromRole="Cuenta" ToRole="Banco" />
           <NavigationProperty Name="Cliente" Relationship="Self.FK_Cuenta_Cliente" FromRole="Cuenta" ToRole="Cliente" />
           <NavigationProperty Name="Transaccion" Relationship="Self.FK_Transaccion_Cuenta" FromRole="Cuenta" ToRole="Transaccion" />
         </EntityType>
@@ -208,9 +195,8 @@
             <PropertyRef Name="idServicio" />
           </Key>
           <Property Name="idServicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cuenta" Type="Int32" Nullable="false" />
-          <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="numCuenta" Type="Int32" Nullable="false" />
+          <Property Name="estado" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="monto" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Transaccion" Relationship="Self.FK_Transaccion_Servicios" FromRole="Servicios" ToRole="Transaccion" />
         </EntityType>
@@ -219,10 +205,11 @@
             <PropertyRef Name="idTransaccion" />
           </Key>
           <Property Name="idTransaccion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="fecha_hora" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="cuentaOrigen" Type="Int32" Nullable="false" />
           <Property Name="cuentaDestino" Type="Int32" Nullable="false" />
-          <Property Name="monto" Type="Double" Nullable="false" />
+          <Property Name="servicio" Type="Int32" Nullable="false" />
+          <Property Name="fechaHora" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="monto" Type="Int32" Nullable="false" />
           <Property Name="detalle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Cuenta" Relationship="Self.FK_Transaccion_Cuenta" FromRole="Transaccion" ToRole="Cuenta" />
           <NavigationProperty Name="Servicios" Relationship="Self.FK_Transaccion_Servicios" FromRole="Transaccion" ToRole="Servicios" />
@@ -236,79 +223,62 @@
           <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Banco" Relationship="Self.FK_Banco_Usuarios" FromRole="Usuarios" ToRole="Banco" />
         </EntityType>
-        <Association Name="FK_Banco_Usuarios">
-          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
-          <End Role="Banco" Type="Self.Banco" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Usuarios">
-              <PropertyRef Name="idUsuario" />
-            </Principal>
-            <Dependent Role="Banco">
-              <PropertyRef Name="idBanco" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Cuenta_Banco">
           <End Role="Banco" Type="Self.Banco" Multiplicity="1" />
-          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="0..1" />
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Banco">
               <PropertyRef Name="idBanco" />
             </Principal>
             <Dependent Role="Cuenta">
-              <PropertyRef Name="idCuenta" />
+              <PropertyRef Name="banco" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Cuenta_Cliente">
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
-          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="0..1" />
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cliente">
               <PropertyRef Name="idCliente" />
             </Principal>
             <Dependent Role="Cuenta">
-              <PropertyRef Name="idCuenta" />
+              <PropertyRef Name="propietarioCuenta" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Transaccion_Cuenta">
           <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="1" />
-          <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="0..1" />
+          <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cuenta">
               <PropertyRef Name="idCuenta" />
             </Principal>
             <Dependent Role="Transaccion">
-              <PropertyRef Name="idTransaccion" />
+              <PropertyRef Name="cuentaOrigen" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Transaccion_Servicios">
           <End Role="Servicios" Type="Self.Servicios" Multiplicity="1" />
-          <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="0..1" />
+          <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Servicios">
               <PropertyRef Name="idServicio" />
             </Principal>
             <Dependent Role="Transaccion">
-              <PropertyRef Name="idTransaccion" />
+              <PropertyRef Name="servicio" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="WebBankingEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="WebBankingEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Banco" EntityType="Self.Banco" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" />
           <EntitySet Name="Cuenta" EntityType="Self.Cuenta" />
           <EntitySet Name="Servicios" EntityType="Self.Servicios" />
           <EntitySet Name="Transaccion" EntityType="Self.Transaccion" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
-          <AssociationSet Name="FK_Banco_Usuarios" Association="Self.FK_Banco_Usuarios">
-            <End Role="Usuarios" EntitySet="Usuarios" />
-            <End Role="Banco" EntitySet="Banco" />
-          </AssociationSet>
           <AssociationSet Name="FK_Cuenta_Banco" Association="Self.FK_Cuenta_Banco">
             <End Role="Banco" EntitySet="Banco" />
             <End Role="Cuenta" EntitySet="Cuenta" />
@@ -331,11 +301,12 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="WebBankingModelStoreContainer" CdmEntityContainer="WebBankingEntities1">
+        <EntityContainerMapping StorageEntityContainer="WebBankingModelStoreContainer" CdmEntityContainer="WebBankingEntities2">
           <EntitySetMapping Name="Banco">
             <EntityTypeMapping TypeName="WebBankingModel.Banco">
               <MappingFragment StoreEntitySet="Banco">
                 <ScalarProperty Name="idBanco" ColumnName="idBanco" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="sucursal" ColumnName="sucursal" />
               </MappingFragment>
@@ -362,7 +333,8 @@
               <MappingFragment StoreEntitySet="Cuenta">
                 <ScalarProperty Name="idCuenta" ColumnName="idCuenta" />
                 <ScalarProperty Name="numCuenta" ColumnName="numCuenta" />
-                <ScalarProperty Name="propietario" ColumnName="propietario" />
+                <ScalarProperty Name="banco" ColumnName="banco" />
+                <ScalarProperty Name="propietarioCuenta" ColumnName="propietarioCuenta" />
                 <ScalarProperty Name="saldo" ColumnName="saldo" />
                 <ScalarProperty Name="estado" ColumnName="estado" />
                 <ScalarProperty Name="direccion" ColumnName="direccion" />
@@ -373,8 +345,7 @@
             <EntityTypeMapping TypeName="WebBankingModel.Servicios">
               <MappingFragment StoreEntitySet="Servicios">
                 <ScalarProperty Name="idServicio" ColumnName="idServicio" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="cuenta" ColumnName="cuenta" />
+                <ScalarProperty Name="numCuenta" ColumnName="numCuenta" />
                 <ScalarProperty Name="estado" ColumnName="estado" />
                 <ScalarProperty Name="monto" ColumnName="monto" />
               </MappingFragment>
@@ -384,9 +355,10 @@
             <EntityTypeMapping TypeName="WebBankingModel.Transaccion">
               <MappingFragment StoreEntitySet="Transaccion">
                 <ScalarProperty Name="idTransaccion" ColumnName="idTransaccion" />
-                <ScalarProperty Name="fecha_hora" ColumnName="fecha_hora" />
                 <ScalarProperty Name="cuentaOrigen" ColumnName="cuentaOrigen" />
                 <ScalarProperty Name="cuentaDestino" ColumnName="cuentaDestino" />
+                <ScalarProperty Name="servicio" ColumnName="servicio" />
+                <ScalarProperty Name="fechaHora" ColumnName="fechaHora" />
                 <ScalarProperty Name="monto" ColumnName="monto" />
                 <ScalarProperty Name="detalle" ColumnName="detalle" />
               </MappingFragment>

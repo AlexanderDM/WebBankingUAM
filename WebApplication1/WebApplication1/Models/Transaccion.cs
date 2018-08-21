@@ -15,10 +15,11 @@ namespace WebApplication1.Models
     public partial class Transaccion
     {
         public int idTransaccion { get; set; }
-        public byte[] fecha_hora { get; set; }
         public int cuentaOrigen { get; set; }
         public int cuentaDestino { get; set; }
-        public double monto { get; set; }
+        public int servicio { get; set; }
+        public byte[] fechaHora { get; set; }
+        public int monto { get; set; }
         public string detalle { get; set; }
     
         public virtual Cuenta Cuenta { get; set; }

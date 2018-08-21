@@ -10,112 +10,117 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class ServiciosController : Controller
+    public class CuentasController : Controller
     {
-        private WebBankingEntities1 db = new WebBankingEntities1();
+        private WebBankingEntities2 db = new WebBankingEntities2();
 
-        // GET: Servicios
+        // GET: Cuentas
         public ActionResult Index()
         {
-            var servicios = db.Servicios.Include(s => s.Transaccion);
-            return View(servicios.ToList());
+            var cuenta = db.Cuenta.Include(c => c.Banco1).Include(c => c.Cliente);
+            return View(cuenta.ToList());
         }
 
-        // GET: Servicios/Details/5
+        // GET: Cuentas/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Servicios servicios = db.Servicios.Find(id);
-            if (servicios == null)
+            Cuenta cuenta = db.Cuenta.Find(id);
+            if (cuenta == null)
             {
                 return HttpNotFound();
             }
-            return View(servicios);
+            return View(cuenta);
         }
 
-        // GET: Servicios/Create
+        // GET: Cuentas/Create
         public ActionResult Create()
         {
-            ViewBag.idServicio = new SelectList(db.Transaccion, "idTransaccion", "detalle");
+            ViewBag.banco = new SelectList(db.Banco, "idBanco", "nombre");
+            ViewBag.propietarioCuenta = new SelectList(db.Cliente, "idCliente", "nombreCliente");
+
             return View();
         }
 
-        // POST: Servicios/Create
+        // POST: Cuentas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idServicio,nombre,cuenta,estado,monto")] Servicios servicios)
+        public ActionResult Create([Bind(Include = "idCuenta,numCuenta,banco,propietarioCuenta,saldo,estado,direccion")] Cuenta cuenta)
         {
             if (ModelState.IsValid)
             {
-                db.Servicios.Add(servicios);
+                db.Cuenta.Add(cuenta);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.idServicio = new SelectList(db.Transaccion, "idTransaccion", "detalle", servicios.idServicio);
-            return View(servicios);
+            ViewBag.banco = new SelectList(db.Banco, "idBanco", "nombre", cuenta.banco);
+            ViewBag.propietarioCuenta = new SelectList(db.Cliente, "idCliente", "nombreCliente", cuenta.propietarioCuenta);
+            return View(cuenta);
         }
 
-        // GET: Servicios/Edit/5
+        // GET: Cuentas/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Servicios servicios = db.Servicios.Find(id);
-            if (servicios == null)
+            Cuenta cuenta = db.Cuenta.Find(id);
+            if (cuenta == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.idServicio = new SelectList(db.Transaccion, "idTransaccion", "detalle", servicios.idServicio);
-            return View(servicios);
+            ViewBag.banco = new SelectList(db.Banco, "idBanco", "nombre", cuenta.banco);
+            ViewBag.propietarioCuenta = new SelectList(db.Cliente, "idCliente", "nombreCliente", cuenta.propietarioCuenta);
+            return View(cuenta);
         }
 
-        // POST: Servicios/Edit/5
+        // POST: Cuentas/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idServicio,nombre,cuenta,estado,monto")] Servicios servicios)
+        public ActionResult Edit([Bind(Include = "idCuenta,numCuenta,banco,propietarioCuenta,saldo,estado,direccion")] Cuenta cuenta)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(servicios).State = EntityState.Modified;
+                db.Entry(cuenta).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.idServicio = new SelectList(db.Transaccion, "idTransaccion", "detalle", servicios.idServicio);
-            return View(servicios);
+            ViewBag.banco = new SelectList(db.Banco, "idBanco", "nombre", cuenta.banco);
+            ViewBag.propietarioCuenta = new SelectList(db.Cliente, "idCliente", "nombreCliente", cuenta.propietarioCuenta);
+            return View(cuenta);
         }
 
-        // GET: Servicios/Delete/5
+        // GET: Cuentas/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Servicios servicios = db.Servicios.Find(id);
-            if (servicios == null)
+            Cuenta cuenta = db.Cuenta.Find(id);
+            if (cuenta == null)
             {
                 return HttpNotFound();
             }
-            return View(servicios);
+            return View(cuenta);
         }
 
-        // POST: Servicios/Delete/5
+        // POST: Cuentas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Servicios servicios = db.Servicios.Find(id);
-            db.Servicios.Remove(servicios);
+            Cuenta cuenta = db.Cuenta.Find(id);
+            db.Cuenta.Remove(cuenta);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

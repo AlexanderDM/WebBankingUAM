@@ -12,7 +12,7 @@ namespace WebApplication1.Controllers
 {
     public class ClientesController : Controller
     {
-        private WebBankingEntities1 db = new WebBankingEntities1();
+        private WebBankingEntities2 db = new WebBankingEntities2();
         
 
         // GET: Clientes

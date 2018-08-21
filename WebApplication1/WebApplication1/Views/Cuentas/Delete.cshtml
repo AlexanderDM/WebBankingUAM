@@ -1,31 +1,30 @@
-﻿@model WebApplication1.Models.Servicios
+﻿@model WebApplication1.Models.Cuenta
 
 @{
     ViewBag.Title = "Delete";
-    Layout = "~/Views/Clientes/InactivarEstado.cshtml";
 }
 
 <h2>Delete</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Servicios</h4>
+    <h4>Cuenta</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.nombre)
+            @Html.DisplayNameFor(model => model.numCuenta)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.nombre)
+            @Html.DisplayFor(model => model.numCuenta)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.cuenta)
+            @Html.DisplayNameFor(model => model.saldo)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.cuenta)
+            @Html.DisplayFor(model => model.saldo)
         </dd>
 
         <dt>
@@ -37,19 +36,27 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.monto)
+            @Html.DisplayNameFor(model => model.direccion)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.monto)
+            @Html.DisplayFor(model => model.direccion)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Transaccion.detalle)
+            @Html.DisplayNameFor(model => model.Banco1.nombre)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Transaccion.detalle)
+            @Html.DisplayFor(model => model.Banco1.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cliente.nombreCliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cliente.nombreCliente)
         </dd>
 
     </dl>

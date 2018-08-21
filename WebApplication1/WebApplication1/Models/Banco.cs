@@ -14,12 +14,18 @@ namespace WebApplication1.Models
     
     public partial class Banco
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Banco()
+        {
+            this.Cuenta = new HashSet<Cuenta>();
+        }
+    
         public int idBanco { get; set; }
+        public int usuario { get; set; }
         public string nombre { get; set; }
         public string sucursal { get; set; }
-        public double saldoTotal { get; set; }
     
-        public virtual Usuarios Usuarios { get; set; }
-        public virtual Cuenta Cuenta { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cuenta> Cuenta { get; set; }
     }
 }

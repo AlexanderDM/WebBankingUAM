@@ -38,9 +38,7 @@
         <th>
             @Html.DisplayNameFor(model => model.contrasenaCliente)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cuenta.propietario)
-        </th>
+        
         <th></th>
     </tr>
 
@@ -73,9 +71,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.contrasenaCliente)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cuenta.propietario)
-        </td>
+       
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.idCliente }) |
             @Html.ActionLink("InactivarEstado", "InactivarEstado", new { id = item.idCliente }) |
