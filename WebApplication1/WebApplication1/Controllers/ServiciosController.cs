@@ -6,125 +6,119 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using WebApplication1.Datos;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class ClientesController : Controller
+    public class ServiciosController : Controller
     {
         private WebBankingEntities6 db = new WebBankingEntities6();
 
-        // GET: Clientes
+        // GET: Servicios
         public ActionResult Index()
         {
-            return View(db.Cliente.ToList());
+            var servicios = db.Servicios.Include(s => s.CuentaServicio);
+            return View(servicios.ToList());
         }
 
-        // GET: Clientes/Details/5
+        // GET: Servicios/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = db.Cliente.Find(id);
-            if (cliente == null)
+            Servicios servicios = db.Servicios.Find(id);
+            if (servicios == null)
             {
                 return HttpNotFound();
             }
-            return View(cliente);
+            return View(servicios);
         }
 
-        // GET: Clientes/Create
+        // GET: Servicios/Create
         public ActionResult Create()
         {
+            ViewBag.CuentaAsociada = new SelectList(db.CuentaServicio, "idCuentaServicio", "numCuenta");
             return View();
         }
 
-        // POST: Clientes/Create
+        // POST: Servicios/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idCliente,nombreCliente,apellidos,identificacion,estado,email,direccion,telefono,usuarioCliente,contrasenaCliente")] Cliente cliente)
+        public ActionResult Create([Bind(Include = "idServicio,CuentaAsociada,nombre,compañia,monto")] Servicios servicios)
         {
             if (ModelState.IsValid)
             {
-                db.Cliente.Add(cliente);
+                db.Servicios.Add(servicios);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(cliente);
+            ViewBag.CuentaAsociada = new SelectList(db.CuentaServicio, "idCuentaServicio", "numCuenta", servicios.CuentaAsociada);
+            return View(servicios);
         }
 
-        // GET: Clientes/Edit/5
+        // GET: Servicios/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = db.Cliente.Find(id);
-            if (cliente == null)
+            Servicios servicios = db.Servicios.Find(id);
+            if (servicios == null)
             {
                 return HttpNotFound();
             }
-            return View(cliente);
+            ViewBag.CuentaAsociada = new SelectList(db.CuentaServicio, "idCuentaServicio", "numCuenta", servicios.CuentaAsociada);
+            return View(servicios);
         }
 
-        // POST: Clientes/Edit/5
+        // POST: Servicios/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idCliente,nombreCliente,apellidos,identificacion,estado,email,direccion,telefono,usuarioCliente,contrasenaCliente")] Cliente cliente)
+        public ActionResult Edit([Bind(Include = "idServicio,CuentaAsociada,nombre,compañia,monto")] Servicios servicios)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cliente).State = EntityState.Modified;
+                db.Entry(servicios).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(cliente);
+            ViewBag.CuentaAsociada = new SelectList(db.CuentaServicio, "idCuentaServicio", "numCuenta", servicios.CuentaAsociada);
+            return View(servicios);
         }
 
-        // GET: Clientes/Delete/5
+        // GET: Servicios/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = db.Cliente.Find(id);
-            if (cliente == null)
+            Servicios servicios = db.Servicios.Find(id);
+            if (servicios == null)
             {
                 return HttpNotFound();
             }
-            return View(cliente);
+            return View(servicios);
         }
 
-        // POST: Clientes/Delete/5
+        // POST: Servicios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Cliente cliente = db.Cliente.Find(id);
-            db.Cliente.Remove(cliente);
+            Servicios servicios = db.Servicios.Find(id);
+            db.Servicios.Remove(servicios);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        public ActionResult ListadoUsuarios(int id)
-        {
-            ClienteModel modelo = new ClienteModel();
-
-   
-            modelo.Cliente = new ConsultaCliente().ListadoClientes();
-            modelo.Cuenta = modelo.Cliente.Cuenta.FirstOrDefault();
-            return View(modelo);
-        }
-
 
         protected override void Dispose(bool disposing)
         {

@@ -13,10 +13,10 @@ namespace WebApplication1.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class WebBankingEntities2 : DbContext
+    public partial class WebBankingEntities6 : DbContext
     {
-        public WebBankingEntities2()
-            : base("name=WebBankingEntities2")
+        public WebBankingEntities6()
+            : base("name=WebBankingEntities6")
         {
         }
     
@@ -28,6 +28,7 @@ namespace WebApplication1.Models
         public virtual DbSet<Banco> Banco { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Cuenta> Cuenta { get; set; }
+        public virtual DbSet<CuentaServicio> CuentaServicio { get; set; }
         public virtual DbSet<Servicios> Servicios { get; set; }
         public virtual DbSet<Transaccion> Transaccion { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }

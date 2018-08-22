@@ -1,5 +1,4 @@
 ﻿
-
 <!DOCTYPE html>
 
 <html>
@@ -11,23 +10,28 @@
         <table class="table">
             <tr>
                 <th>
-                     <p>
-                          Agregar Cliente
-                           @Html.ActionLink("Create","Index", "Clientes")
-                        </p>      
-                </th>
-                <th>
-                    <<p>
-                       Inactivar Cliente
-                        @Html.ActionLink("InactivarEstado", "Index", "Clientes")
-                    </p>
-                   
-                </th>
-                <th>
+                    <div>
                     <p>
-                        Actualizar Cliente
-                        @Html.ActionLink("Edit","Index", "Clientes")
+                        Agregar Cliente
+                        @Html.ActionLink("Create", "Index", "Clientes")
                     </p>
+                </div>
+                </th>
+                <th>
+                    <div>
+                        <p>
+                            Inactivar Cliente
+                            @Html.ActionLink("InactivarEstado", "Index", "Clientes")
+                        </p>
+                    </div>
+                </th>
+                <th> 
+                    <div>
+                        <p>
+                            Actualizar Cliente
+                            @Html.ActionLink("Edit", "Index", "Clientes")
+                        </p>
+                    </div>
                 </th>
             </tr>
 

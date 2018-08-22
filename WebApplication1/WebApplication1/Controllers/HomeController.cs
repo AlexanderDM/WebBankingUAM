@@ -28,7 +28,7 @@ namespace WebApplication1.Controllers
         }
         public ActionResult Mantenimiento()
         {
-            ViewBag.Message = "LOL";
+            ViewBag.Message = "Aca podra selecionar la opcion a la que quiera dar mantenimiento";
 
             return View();
         }

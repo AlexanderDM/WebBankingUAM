@@ -1,0 +1,46 @@
+﻿@model WebApplication1.Datos.ClienteModel
+
+@{
+    ViewBag.Title = "listadoUsuarios";
+    
+}
+
+<h2>listadoUsuarios</h2>
+
+<div>
+    <h4>Cliente</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Cuenta.numCuenta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cuenta.numCuenta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cliente.nombreCliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cliente.nombreCliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cliente.apellidos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cliente.apellidos)
+        </dd>
+
+
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Cliente.idCliente }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

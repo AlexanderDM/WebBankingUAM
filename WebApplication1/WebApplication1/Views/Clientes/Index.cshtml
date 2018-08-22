@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<WebApplication1.Models.Cliente>
 
 @{
-    ViewBag.Title = "Index";
+                /**/
+
+                ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
@@ -38,46 +40,46 @@
         <th>
             @Html.DisplayNameFor(model => model.contrasenaCliente)
         </th>
-        
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.nombreCliente)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.apellidos)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.identificacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.estado)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.direccion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.telefono)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.usuarioCliente)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.contrasenaCliente)
-        </td>
-       
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.idCliente }) |
-            @Html.ActionLink("InactivarEstado", "InactivarEstado", new { id = item.idCliente }) |
-            
-        </td>
-    </tr>
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.nombreCliente)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.apellidos)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.identificacion)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.estado)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.email)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.direccion)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.telefono)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.usuarioCliente)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.contrasenaCliente)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.idCliente }) |
+        @Html.ActionLink("Details", "Details", new { id = item.idCliente }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.idCliente })
+        @Html.ActionLink("ListadoUsuarios", "ListadoUsuarios", new { id = item.idCliente })
+    </td>
+</tr>
 }
 
 </table>

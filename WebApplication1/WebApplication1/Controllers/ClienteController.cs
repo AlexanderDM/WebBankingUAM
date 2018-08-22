@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
 
+
 namespace WebApplication1.Controllers
 {
     public class ClienteController : Controller
@@ -13,7 +14,7 @@ namespace WebApplication1.Controllers
         public ActionResult AgregarCliente()
         {
             Cliente clie = new Cliente();
-
+            
             clie.nombreCliente = "viviana Fernandez";
             clie.identificacion = "16545987";
             

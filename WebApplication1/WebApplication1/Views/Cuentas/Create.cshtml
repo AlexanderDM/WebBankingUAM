@@ -10,17 +10,27 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>Cuenta</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.numCuenta, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.numCuenta, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.numCuenta, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="form-horizontal">
+    <h4>Cuenta</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <form action="Create" method="post">
+        <label> Producto </label>
+        <input id="Text1" type="text" name="producto" />
+
+        <label> Moneda </label>
+        <input id="Text1" type="text" name="moneda" />
+
+        <label> Oficina </label>
+        <input id="Text1" type="text" name="oficina" />
+
+        <label> Cuenta </label>
+        <input id="Text1" type="text" name="num" />
+
+        <label> Digito </label>
+        <input id="Text1" type="text" name="digito" />
+
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.banco, "banco", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -67,7 +77,9 @@
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
-    </div>
+    </form>
+</div>
+
 }
 
 <div>

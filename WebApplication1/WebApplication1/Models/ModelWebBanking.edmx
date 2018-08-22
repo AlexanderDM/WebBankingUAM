@@ -34,20 +34,29 @@
             <PropertyRef Name="idCuenta" />
           </Key>
           <Property Name="idCuenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="numCuenta" Type="int" Nullable="false" />
+          <Property Name="numCuenta" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="banco" Type="int" Nullable="false" />
           <Property Name="propietarioCuenta" Type="int" Nullable="false" />
           <Property Name="saldo" Type="int" Nullable="false" />
           <Property Name="estado" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="direccion" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <EntityType Name="CuentaServicio">
+          <Key>
+            <PropertyRef Name="idCuentaServicio" />
+          </Key>
+          <Property Name="idCuentaServicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="numCuenta" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="banco" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Servicios">
           <Key>
             <PropertyRef Name="idServicio" />
           </Key>
           <Property Name="idServicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="numCuenta" Type="int" Nullable="false" />
-          <Property Name="estado" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="CuentaAsociada" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="compañia" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="monto" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Transaccion">
@@ -72,6 +81,18 @@
           <Property Name="contrasena" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="estado" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Banco_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Banco" Type="Self.Banco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Banco">
+              <PropertyRef Name="usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Cuenta_Banco">
           <End Role="Banco" Type="Self.Banco" Multiplicity="1" />
           <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="*" />
@@ -96,6 +117,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CuentaServicio_Banco">
+          <End Role="Banco" Type="Self.Banco" Multiplicity="1" />
+          <End Role="CuentaServicio" Type="Self.CuentaServicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banco">
+              <PropertyRef Name="idBanco" />
+            </Principal>
+            <Dependent Role="CuentaServicio">
+              <PropertyRef Name="banco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Servicios_CuentaServicio">
+          <End Role="CuentaServicio" Type="Self.CuentaServicio" Multiplicity="1" />
+          <End Role="Servicios" Type="Self.Servicios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CuentaServicio">
+              <PropertyRef Name="idCuentaServicio" />
+            </Principal>
+            <Dependent Role="Servicios">
+              <PropertyRef Name="CuentaAsociada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Transaccion_Cuenta">
           <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="1" />
           <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
@@ -108,25 +153,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Transaccion_Servicios">
-          <End Role="Servicios" Type="Self.Servicios" Multiplicity="1" />
-          <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Servicios">
-              <PropertyRef Name="idServicio" />
-            </Principal>
-            <Dependent Role="Transaccion">
-              <PropertyRef Name="servicio" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="WebBankingModelStoreContainer">
           <EntitySet Name="Banco" EntityType="Self.Banco" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cuenta" EntityType="Self.Cuenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CuentaServicio" EntityType="Self.CuentaServicio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Servicios" EntityType="Self.Servicios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaccion" EntityType="Self.Transaccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Banco_Usuarios" Association="Self.FK_Banco_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Banco" EntitySet="Banco" />
+          </AssociationSet>
           <AssociationSet Name="FK_Cuenta_Banco" Association="Self.FK_Cuenta_Banco">
             <End Role="Banco" EntitySet="Banco" />
             <End Role="Cuenta" EntitySet="Cuenta" />
@@ -135,12 +173,16 @@
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="Cuenta" EntitySet="Cuenta" />
           </AssociationSet>
+          <AssociationSet Name="FK_CuentaServicio_Banco" Association="Self.FK_CuentaServicio_Banco">
+            <End Role="Banco" EntitySet="Banco" />
+            <End Role="CuentaServicio" EntitySet="CuentaServicio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Servicios_CuentaServicio" Association="Self.FK_Servicios_CuentaServicio">
+            <End Role="CuentaServicio" EntitySet="CuentaServicio" />
+            <End Role="Servicios" EntitySet="Servicios" />
+          </AssociationSet>
           <AssociationSet Name="FK_Transaccion_Cuenta" Association="Self.FK_Transaccion_Cuenta">
             <End Role="Cuenta" EntitySet="Cuenta" />
-            <End Role="Transaccion" EntitySet="Transaccion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Transaccion_Servicios" Association="Self.FK_Transaccion_Servicios">
-            <End Role="Servicios" EntitySet="Servicios" />
             <End Role="Transaccion" EntitySet="Transaccion" />
           </AssociationSet>
         </EntityContainer>
@@ -157,7 +199,9 @@
           <Property Name="usuario" Type="Int32" Nullable="false" />
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="sucursal" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Banco_Usuarios" FromRole="Banco" ToRole="Usuarios" />
           <NavigationProperty Name="Cuenta" Relationship="Self.FK_Cuenta_Banco" FromRole="Banco" ToRole="Cuenta" />
+          <NavigationProperty Name="CuentaServicio" Relationship="Self.FK_CuentaServicio_Banco" FromRole="Banco" ToRole="CuentaServicio" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
@@ -180,7 +224,7 @@
             <PropertyRef Name="idCuenta" />
           </Key>
           <Property Name="idCuenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="numCuenta" Type="Int32" Nullable="false" />
+          <Property Name="numCuenta" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="banco" Type="Int32" Nullable="false" />
           <Property Name="propietarioCuenta" Type="Int32" Nullable="false" />
           <Property Name="saldo" Type="Int32" Nullable="false" />
@@ -190,15 +234,26 @@
           <NavigationProperty Name="Cliente" Relationship="Self.FK_Cuenta_Cliente" FromRole="Cuenta" ToRole="Cliente" />
           <NavigationProperty Name="Transaccion" Relationship="Self.FK_Transaccion_Cuenta" FromRole="Cuenta" ToRole="Transaccion" />
         </EntityType>
+        <EntityType Name="CuentaServicio">
+          <Key>
+            <PropertyRef Name="idCuentaServicio" />
+          </Key>
+          <Property Name="idCuentaServicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="numCuenta" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="banco" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Banco1" Relationship="Self.FK_CuentaServicio_Banco" FromRole="CuentaServicio" ToRole="Banco" />
+          <NavigationProperty Name="Servicios" Relationship="Self.FK_Servicios_CuentaServicio" FromRole="CuentaServicio" ToRole="Servicios" />
+        </EntityType>
         <EntityType Name="Servicios">
           <Key>
             <PropertyRef Name="idServicio" />
           </Key>
           <Property Name="idServicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="numCuenta" Type="Int32" Nullable="false" />
-          <Property Name="estado" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CuentaAsociada" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="compañia" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="monto" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Transaccion" Relationship="Self.FK_Transaccion_Servicios" FromRole="Servicios" ToRole="Transaccion" />
+          <NavigationProperty Name="CuentaServicio" Relationship="Self.FK_Servicios_CuentaServicio" FromRole="Servicios" ToRole="CuentaServicio" />
         </EntityType>
         <EntityType Name="Transaccion">
           <Key>
@@ -212,7 +267,6 @@
           <Property Name="monto" Type="Int32" Nullable="false" />
           <Property Name="detalle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Cuenta" Relationship="Self.FK_Transaccion_Cuenta" FromRole="Transaccion" ToRole="Cuenta" />
-          <NavigationProperty Name="Servicios" Relationship="Self.FK_Transaccion_Servicios" FromRole="Transaccion" ToRole="Servicios" />
         </EntityType>
         <EntityType Name="Usuarios">
           <Key>
@@ -223,7 +277,20 @@
           <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Banco" Relationship="Self.FK_Banco_Usuarios" FromRole="Usuarios" ToRole="Banco" />
         </EntityType>
+        <Association Name="FK_Banco_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Banco" Type="Self.Banco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Banco">
+              <PropertyRef Name="usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Cuenta_Banco">
           <End Role="Banco" Type="Self.Banco" Multiplicity="1" />
           <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="*" />
@@ -232,6 +299,18 @@
               <PropertyRef Name="idBanco" />
             </Principal>
             <Dependent Role="Cuenta">
+              <PropertyRef Name="banco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CuentaServicio_Banco">
+          <End Role="Banco" Type="Self.Banco" Multiplicity="1" />
+          <End Role="CuentaServicio" Type="Self.CuentaServicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banco">
+              <PropertyRef Name="idBanco" />
+            </Principal>
+            <Dependent Role="CuentaServicio">
               <PropertyRef Name="banco" />
             </Dependent>
           </ReferentialConstraint>
@@ -260,28 +339,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Transaccion_Servicios">
-          <End Role="Servicios" Type="Self.Servicios" Multiplicity="1" />
-          <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+        <Association Name="FK_Servicios_CuentaServicio">
+          <End Role="CuentaServicio" Type="Self.CuentaServicio" Multiplicity="1" />
+          <End Role="Servicios" Type="Self.Servicios" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Servicios">
-              <PropertyRef Name="idServicio" />
+            <Principal Role="CuentaServicio">
+              <PropertyRef Name="idCuentaServicio" />
             </Principal>
-            <Dependent Role="Transaccion">
-              <PropertyRef Name="servicio" />
+            <Dependent Role="Servicios">
+              <PropertyRef Name="CuentaAsociada" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="WebBankingEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="WebBankingEntities6" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Banco" EntityType="Self.Banco" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" />
           <EntitySet Name="Cuenta" EntityType="Self.Cuenta" />
+          <EntitySet Name="CuentaServicio" EntityType="Self.CuentaServicio" />
           <EntitySet Name="Servicios" EntityType="Self.Servicios" />
           <EntitySet Name="Transaccion" EntityType="Self.Transaccion" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <AssociationSet Name="FK_Banco_Usuarios" Association="Self.FK_Banco_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Banco" EntitySet="Banco" />
+          </AssociationSet>
           <AssociationSet Name="FK_Cuenta_Banco" Association="Self.FK_Cuenta_Banco">
             <End Role="Banco" EntitySet="Banco" />
             <End Role="Cuenta" EntitySet="Cuenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CuentaServicio_Banco" Association="Self.FK_CuentaServicio_Banco">
+            <End Role="Banco" EntitySet="Banco" />
+            <End Role="CuentaServicio" EntitySet="CuentaServicio" />
           </AssociationSet>
           <AssociationSet Name="FK_Cuenta_Cliente" Association="Self.FK_Cuenta_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
@@ -291,9 +379,9 @@
             <End Role="Cuenta" EntitySet="Cuenta" />
             <End Role="Transaccion" EntitySet="Transaccion" />
           </AssociationSet>
-          <AssociationSet Name="FK_Transaccion_Servicios" Association="Self.FK_Transaccion_Servicios">
+          <AssociationSet Name="FK_Servicios_CuentaServicio" Association="Self.FK_Servicios_CuentaServicio">
+            <End Role="CuentaServicio" EntitySet="CuentaServicio" />
             <End Role="Servicios" EntitySet="Servicios" />
-            <End Role="Transaccion" EntitySet="Transaccion" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -301,7 +389,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="WebBankingModelStoreContainer" CdmEntityContainer="WebBankingEntities2">
+        <EntityContainerMapping StorageEntityContainer="WebBankingModelStoreContainer" CdmEntityContainer="WebBankingEntities6">
           <EntitySetMapping Name="Banco">
             <EntityTypeMapping TypeName="WebBankingModel.Banco">
               <MappingFragment StoreEntitySet="Banco">
@@ -341,12 +429,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CuentaServicio">
+            <EntityTypeMapping TypeName="WebBankingModel.CuentaServicio">
+              <MappingFragment StoreEntitySet="CuentaServicio">
+                <ScalarProperty Name="idCuentaServicio" ColumnName="idCuentaServicio" />
+                <ScalarProperty Name="numCuenta" ColumnName="numCuenta" />
+                <ScalarProperty Name="banco" ColumnName="banco" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Servicios">
             <EntityTypeMapping TypeName="WebBankingModel.Servicios">
               <MappingFragment StoreEntitySet="Servicios">
                 <ScalarProperty Name="idServicio" ColumnName="idServicio" />
-                <ScalarProperty Name="numCuenta" ColumnName="numCuenta" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="CuentaAsociada" ColumnName="CuentaAsociada" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="compañia" ColumnName="compañia" />
                 <ScalarProperty Name="monto" ColumnName="monto" />
               </MappingFragment>
             </EntityTypeMapping>

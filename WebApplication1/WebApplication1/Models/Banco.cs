@@ -18,6 +18,7 @@ namespace WebApplication1.Models
         public Banco()
         {
             this.Cuenta = new HashSet<Cuenta>();
+            this.CuentaServicio = new HashSet<CuentaServicio>();
         }
     
         public int idBanco { get; set; }
@@ -25,7 +26,10 @@ namespace WebApplication1.Models
         public string nombre { get; set; }
         public string sucursal { get; set; }
     
+        public virtual Usuarios Usuarios { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cuenta> Cuenta { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CuentaServicio> CuentaServicio { get; set; }
     }
 }

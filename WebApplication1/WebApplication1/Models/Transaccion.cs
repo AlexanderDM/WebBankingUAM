@@ -23,6 +23,5 @@ namespace WebApplication1.Models
         public string detalle { get; set; }
     
         public virtual Cuenta Cuenta { get; set; }
-        public virtual Servicios Servicios { get; set; }
     }
 }

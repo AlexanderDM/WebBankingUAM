@@ -12,7 +12,7 @@ namespace WebApplication1.Controllers
 {
     public class CuentasController : Controller
     {
-        private WebBankingEntities2 db = new WebBankingEntities2();
+        private WebBankingEntities6 db = new WebBankingEntities6();
 
         // GET: Cuentas
         public ActionResult Index()
@@ -36,6 +36,8 @@ namespace WebApplication1.Controllers
             return View(cuenta);
         }
 
+        
+    
         // GET: Cuentas/Create
         public ActionResult Create()
         {
@@ -50,13 +52,26 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idCuenta,numCuenta,banco,propietarioCuenta,saldo,estado,direccion")] Cuenta cuenta)
+        public ActionResult Create(string producto, string moneda, string oficina, string num, string digito,[Bind(Include = "idCuenta,numCuenta,banco,propietarioCuenta,saldo,estado,direccion")] Cuenta cuenta)
         {
+            string cuen_num = (producto + moneda + oficina + num + digito);
+            
+            Cuenta obj = new Cuenta();
+            obj.numCuenta =cuen_num;
+            obj.banco = cuenta.banco;
+            obj.propietarioCuenta = cuenta.propietarioCuenta;
+            obj.saldo = cuenta.saldo;
+            obj.estado = cuenta.estado;
+            obj.direccion = cuenta.direccion;
+
             if (ModelState.IsValid)
             {
-                db.Cuenta.Add(cuenta);
+       
+                db.Cuenta.Add(obj);
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
+
             }
 
             ViewBag.banco = new SelectList(db.Banco, "idBanco", "nombre", cuenta.banco);

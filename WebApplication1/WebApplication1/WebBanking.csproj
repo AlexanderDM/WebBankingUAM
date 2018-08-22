@@ -159,46 +159,52 @@
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\CuentasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ServiciosController.cs" />
+    <Compile Include="Datos\ClienteModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Banco.cs">
-      <DependentUpon>WebBankingModelVF.tt</DependentUpon>
+      <DependentUpon>ModelWebBanking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Cliente.cs">
-      <DependentUpon>WebBankingModelVF.tt</DependentUpon>
+      <DependentUpon>ModelWebBanking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ConsultaCliente.cs" />
     <Compile Include="Models\Cuenta.cs">
-      <DependentUpon>WebBankingModelVF.tt</DependentUpon>
+      <DependentUpon>ModelWebBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CuentaServicio.cs">
+      <DependentUpon>ModelWebBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelWebBanking.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelWebBanking.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelWebBanking.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelWebBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelWebBanking.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelWebBanking.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Servicios.cs">
-      <DependentUpon>WebBankingModelVF.tt</DependentUpon>
+      <DependentUpon>ModelWebBanking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Transaccion.cs">
-      <DependentUpon>WebBankingModelVF.tt</DependentUpon>
+      <DependentUpon>ModelWebBanking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Usuarios.cs">
-      <DependentUpon>WebBankingModelVF.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WebBankingModelVF.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WebBankingModelVF.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WebBankingModelVF.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WebBankingModelVF.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WebBankingModelVF.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WebBankingModelVF.edmx</DependentUpon>
+      <DependentUpon>ModelWebBanking.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-lumen.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -206,27 +212,30 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\WebBankingModelVF.Context.tt">
+    <Content Include="Models\ModelWebBanking.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WebBankingModelVF.edmx</DependentUpon>
-      <LastGenOutput>WebBankingModelVF.Context.cs</LastGenOutput>
+      <DependentUpon>ModelWebBanking.edmx</DependentUpon>
+      <LastGenOutput>ModelWebBanking.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\WebBankingModelVF.tt">
+    <Content Include="Models\ModelWebBanking.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WebBankingModelVF.edmx</DependentUpon>
-      <LastGenOutput>WebBankingModelVF.cs</LastGenOutput>
+      <DependentUpon>ModelWebBanking.edmx</DependentUpon>
+      <LastGenOutput>ModelWebBanking.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\WebBankingModelVF.edmx">
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <EntityDeploy Include="Models\ModelWebBanking.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WebBankingModelVF.Designer.cs</LastGenOutput>
+      <LastGenOutput>ModelWebBanking.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\WebBankingModelVF.edmx.diagram">
-      <DependentUpon>WebBankingModelVF.edmx</DependentUpon>
+    <Content Include="Models\ModelWebBanking.edmx.diagram">
+      <DependentUpon>ModelWebBanking.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -255,18 +264,23 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Mantenimiento.cshtml" />
     <Content Include="Views\Home\OpcCliente.cshtml" />
-    <Content Include="Views\Cliente\AgregarCliente.cshtml" />
-    <Content Include="Views\Clientes\Create.cshtml" />
-    <Content Include="Views\Clientes\Delete.cshtml" />
-    <Content Include="Views\Clientes\Details.cshtml" />
-    <Content Include="Views\Clientes\Edit.cshtml" />
-    <Content Include="Views\Clientes\Index.cshtml" />
-    <Content Include="Views\Clientes\InactivarEstado.cshtml" />
     <Content Include="Views\Cuentas\Create.cshtml" />
     <Content Include="Views\Cuentas\Delete.cshtml" />
     <Content Include="Views\Cuentas\Details.cshtml" />
     <Content Include="Views\Cuentas\Edit.cshtml" />
     <Content Include="Views\Cuentas\Index.cshtml" />
+    <Content Include="Views\Home\OpcServicio.cshtml" />
+    <Content Include="Views\Servicios\Create.cshtml" />
+    <Content Include="Views\Servicios\Delete.cshtml" />
+    <Content Include="Views\Servicios\Details.cshtml" />
+    <Content Include="Views\Servicios\Edit.cshtml" />
+    <Content Include="Views\Servicios\Index.cshtml" />
+    <Content Include="Views\Clientes\Create.cshtml" />
+    <Content Include="Views\Clientes\Delete.cshtml" />
+    <Content Include="Views\Clientes\Details.cshtml" />
+    <Content Include="Views\Clientes\Edit.cshtml" />
+    <Content Include="Views\Clientes\Index.cshtml" />
+    <Content Include="Views\Clientes\listadoUsuarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -276,10 +290,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />

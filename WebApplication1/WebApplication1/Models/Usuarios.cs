@@ -14,10 +14,19 @@ namespace WebApplication1.Models
     
     public partial class Usuarios
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Usuarios()
+        {
+            this.Banco = new HashSet<Banco>();
+        }
+    
         public int idUsuario { get; set; }
         public string nombreUsuario { get; set; }
         public string usuario { get; set; }
         public string contrasena { get; set; }
         public string estado { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Banco> Banco { get; set; }
     }
 }
