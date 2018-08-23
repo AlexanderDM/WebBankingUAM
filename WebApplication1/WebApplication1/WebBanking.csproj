@@ -161,6 +161,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ServiciosController.cs" />
+    <Compile Include="Controllers\TransferenciasController.cs" />
     <Compile Include="Datos\ClienteModel.cs" />
     <Compile Include="Datos\Servicios.cs" />
     <Compile Include="Global.asax.cs">
@@ -280,6 +281,12 @@
     <Content Include="Views\Servicios\Create.cshtml" />
     <Content Include="Views\Clientes\Create.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Transferencias\Create.cshtml" />
+    <Content Include="Views\Transferencias\Delete.cshtml" />
+    <Content Include="Views\Transferencias\Details.cshtml" />
+    <Content Include="Views\Transferencias\Edit.cshtml" />
+    <Content Include="Views\Transferencias\Index.cshtml" />
+    <Content Include="Views\Home\Transferencias.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

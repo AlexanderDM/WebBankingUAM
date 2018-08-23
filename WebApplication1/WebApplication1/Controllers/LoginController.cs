@@ -28,15 +28,26 @@ namespace WebApplication1.Controllers
                 }
                 else
                 {
-                  /*  bool isAdmin = userModel.ValidarAdministrador().esAdmnin;*/
-                    
-                     
-                       
+                    if (UserDetails.estado.Equals("Activo"))
+                    {
+                        if (UserDetails.tipoUsuario.Equals("Administrador"))
+                        {
+                            Session["idCliente"] = UserDetails.idCliente;
+                            Session["nombreCliente"] = UserDetails.nombreCliente;
+                            return RedirectToAction("Mantenimiento", "Home");
+                        }
+                        if (UserDetails.tipoUsuario.Equals("Usuario"))
+                        {
+                            Session["idCliente"] = UserDetails.idCliente;
+                            Session["nombreCliente"] = UserDetails.nombreCliente;
+                            return RedirectToAction("Index", "Home");
+                                
+                        }
 
-                 
+                    }//enviar mensaje de que esta inactivo
                     Session["idCliente"] = UserDetails.idCliente;
-                    Session["usuario"] = UserDetails.usuario;
-                    return RedirectToAction("Index", "Home");
+                    Session["nombreCliente"] = UserDetails.nombreCliente;
+                    return RedirectToAction("Index", "login");
                 }
             }
                 

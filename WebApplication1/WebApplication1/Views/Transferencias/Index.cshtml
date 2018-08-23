@@ -1,0 +1,63 @@
+﻿@model IEnumerable<WebApplication1.Models.Transferencia>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.cuentaDestino)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaHora)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.monto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.detalle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cliente.nombreCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cuenta.numCuenta)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.cuentaDestino)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaHora)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.monto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.detalle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cliente.nombreCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cuenta.numCuenta)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.idTransferencia }) |
+            @Html.ActionLink("Details", "Details", new { id=item.idTransferencia }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.idTransferencia })
+        </td>
+    </tr>
+}
+
+</table>

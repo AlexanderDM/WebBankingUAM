@@ -109,16 +109,18 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult InactivarCliente([Bind(Include = "idCliente,nombreCliente,usuario,identificacion,email,esAdmnin,contrasena,estado")] Cliente cliente)
+        public ActionResult InactivarCliente([Bind(Include = "idCliente,nombreCliente,usuario,identificacion,email,tipoUsuario,contrasena,estado")] Cliente cliente)
         {
             if (ModelState.IsValid)
-            { 
-                
+            {
+                Cliente obj = new Cliente();
+                if (cliente.tipoUsuario.Equals("Usuario")) { 
+                    obj.nombreCliente = cliente.nombreCliente;
                     db.Entry(cliente).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
-            
-                
+
+                }
             }
             return View(cliente);
         }
