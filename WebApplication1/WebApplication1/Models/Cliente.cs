@@ -17,21 +17,23 @@ namespace WebApplication1.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cliente()
         {
-            this.Cuenta = new HashSet<Cuenta>();
+            this.Transferencia = new HashSet<Transferencia>();
         }
     
         public int idCliente { get; set; }
         public string nombreCliente { get; set; }
-        public string apellidos { get; set; }
+        public string usuario { get; set; }
         public string identificacion { get; set; }
-        public string estado { get; set; }
         public string email { get; set; }
-        public string direccion { get; set; }
-        public string telefono { get; set; }
-        public string usuarioCliente { get; set; }
-        public string contrasenaCliente { get; set; }
-    
+        public string tipoUsuario { get; set; }
+        public string contrasena { get; set; }
+        public string estado { get; set; }
+
+        public string loginMensajeError { get; set; }
+
+
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cuenta> Cuenta { get; set; }
+        public virtual ICollection<Transferencia> Transferencia { get; set; }
     }
 }

@@ -12,13 +12,13 @@ namespace WebApplication1.Controllers
 {
     public class ServiciosController : Controller
     {
-        private WebBankingEntities6 db = new WebBankingEntities6();
+        private WebBankingEntities15 db = new WebBankingEntities15();
 
         // GET: Servicios
         public ActionResult Index()
         {
-            var servicios = db.Servicios.Include(s => s.CuentaServicio);
-            return View(servicios.ToList());
+            var servicio = db.Servicio.Include(s => s.Cuenta);
+            return View(servicio.ToList());
         }
 
         // GET: Servicios/Details/5
@@ -28,18 +28,18 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Servicios servicios = db.Servicios.Find(id);
-            if (servicios == null)
+            Servicio servicio = db.Servicio.Find(id);
+            if (servicio == null)
             {
                 return HttpNotFound();
             }
-            return View(servicios);
+            return View(servicio);
         }
 
         // GET: Servicios/Create
         public ActionResult Create()
         {
-            ViewBag.CuentaAsociada = new SelectList(db.CuentaServicio, "idCuentaServicio", "numCuenta");
+            ViewBag.idCuenta = new SelectList(db.Cuenta, "idCuenta", "numCuenta");
             return View();
         }
 
@@ -48,17 +48,26 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idServicio,CuentaAsociada,nombre,compañia,monto")] Servicios servicios)
+        public ActionResult Create(string TipoServicio, [Bind(Include = "idServicio,tipoServicio,idCuenta,identifidor,nombreServicio,estado,monto")] Servicio servicio)
         {
+            Servicio obj = new Servicio();
+
+            obj.tipoServicio = TipoServicio;
+           /* obj.idCuenta = servicio.ValidarServicio(TipoServicio);*/
+            obj.identifidor = servicio.identifidor;
+            obj.nombreServicio = servicio.nombreServicio;
+            obj.estado = servicio.estado;
+            obj.monto = servicio.monto;
+
             if (ModelState.IsValid)
-            {
-                db.Servicios.Add(servicios);
+            {  
+                db.Servicio.Add(obj);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CuentaAsociada = new SelectList(db.CuentaServicio, "idCuentaServicio", "numCuenta", servicios.CuentaAsociada);
-            return View(servicios);
+            ViewBag.idCuenta = new SelectList(db.Cuenta, "idCuenta", "numCuenta", servicio.idCuenta);
+            return View(servicio);
         }
 
         // GET: Servicios/Edit/5
@@ -68,13 +77,13 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Servicios servicios = db.Servicios.Find(id);
-            if (servicios == null)
+            Servicio servicio = db.Servicio.Find(id);
+            if (servicio == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CuentaAsociada = new SelectList(db.CuentaServicio, "idCuentaServicio", "numCuenta", servicios.CuentaAsociada);
-            return View(servicios);
+            ViewBag.idCuenta = new SelectList(db.Cuenta, "idCuenta", "numCuenta", servicio.idCuenta);
+            return View(servicio);
         }
 
         // POST: Servicios/Edit/5
@@ -82,16 +91,16 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idServicio,CuentaAsociada,nombre,compañia,monto")] Servicios servicios)
+        public ActionResult Edit([Bind(Include = "idServicio,tipoServicio,idCuenta,identifidor,nombreServicio,estado,monto")] Servicio servicio)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(servicios).State = EntityState.Modified;
+                db.Entry(servicio).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CuentaAsociada = new SelectList(db.CuentaServicio, "idCuentaServicio", "numCuenta", servicios.CuentaAsociada);
-            return View(servicios);
+            ViewBag.idCuenta = new SelectList(db.Cuenta, "idCuenta", "numCuenta", servicio.idCuenta);
+            return View(servicio);
         }
 
         // GET: Servicios/Delete/5
@@ -101,12 +110,12 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Servicios servicios = db.Servicios.Find(id);
-            if (servicios == null)
+            Servicio servicio = db.Servicio.Find(id);
+            if (servicio == null)
             {
                 return HttpNotFound();
             }
-            return View(servicios);
+            return View(servicio);
         }
 
         // POST: Servicios/Delete/5
@@ -114,8 +123,8 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Servicios servicios = db.Servicios.Find(id);
-            db.Servicios.Remove(servicios);
+            Servicio servicio = db.Servicio.Find(id);
+            db.Servicio.Remove(servicio);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

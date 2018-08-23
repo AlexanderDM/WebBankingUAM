@@ -8,7 +8,7 @@ namespace WebApplication1.Datos
 {
     public class ClienteModel
     {
-       public  Cliente Cliente{ get; set; }
+        public Cliente Cliente{ get; set; }
        public  Cuenta Cuenta { get; set; }
     }
 }

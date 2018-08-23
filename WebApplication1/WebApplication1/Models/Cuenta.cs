@@ -17,20 +17,18 @@ namespace WebApplication1.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cuenta()
         {
-            this.Transaccion = new HashSet<Transaccion>();
+            this.Servicio = new HashSet<Servicio>();
+            this.Transferencia = new HashSet<Transferencia>();
         }
     
         public int idCuenta { get; set; }
         public string numCuenta { get; set; }
-        public int banco { get; set; }
-        public int propietarioCuenta { get; set; }
         public int saldo { get; set; }
         public string estado { get; set; }
-        public string direccion { get; set; }
     
-        public virtual Banco Banco1 { get; set; }
-        public virtual Cliente Cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Transaccion> Transaccion { get; set; }
+        public virtual ICollection<Servicio> Servicio { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Transferencia> Transferencia { get; set; }
     }
 }

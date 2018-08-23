@@ -1,92 +1,23 @@
 ﻿@{
     ViewBag.Title = "Inicio";
+    if (Session["idCliente"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+
 }
 
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio - Mi aplicación ASP.NET</title>
-    <link href="/Content/bootstrap.css" rel="stylesheet" />
-    <link href="/Content/site.css" rel="stylesheet" />
-
-    <script src="/Scripts/modernizr-2.8.3.js"></script>
-
+ 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">Nombre de aplicaci&#243;n</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="/Home/About">Acerca de</a></li>
-                    <li><a href="/Home/Contact">Contacto</a></li>
-                    <li><a href="/Home/Mantenimiento">Mantenimiento</a></li>
-                    
-                </ul>
-            </div>
-        </div>
+    
+    <div>
+        <h1> Dashboard</h1>
+        <h3>Usuario: @Session["usuario"].ToString()</h3>
+        <a href="@Url.Action("LogOut", "Login")">LogOut</a>
     </div>
-    <div class="container body-content">
-
-
-
-        <div class="jumbotron">
-            <h1>Web Banking</h1>
-            <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-            <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <h2>@Html.ActionLink("listadoUsuarios","Index","Clientes")</h2>
-                <p>
-                    Ingres sus datos
-                    ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                    enables a clean separation of concerns and gives you full control over markup
-                    for enjoyable, agile development.
-                </p>
-                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-            </div>
-            <div class="col-md-4">
-                <h2>Consultas</h2>
-                <p>
-                    Saludos, esto es una descripción de la sección de consultas.
-                    Listado de Clientes V2
-                    NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
-                </p>
-                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-            </div>
-            <div class="col-md-4">
-                <h2>Gestión de usuarios</h2>
-                <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-            </div>
-            <div class="col-md-4">
-                <h2>Gestión de Servicios</h2>
-                <p>Gestione los usuarios del sistema de manera sencilla.</p>
-                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-            </div>
-        </div>
-        <hr />
-        <footer>
-            <p>&copy; 2018 - Mi aplicación ASP.NET</p>
-        </footer>
-    </div>
-
-    <script src="/Scripts/jquery-3.3.1.js"></script>
-
-    <script src="/Scripts/bootstrap.js"></script>
-
 
 </body>
 </html>

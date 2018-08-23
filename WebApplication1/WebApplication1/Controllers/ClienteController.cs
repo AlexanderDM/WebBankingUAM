@@ -18,10 +18,10 @@ namespace WebApplication1.Controllers
             clie.nombreCliente = "viviana Fernandez";
             clie.identificacion = "16545987";
             
-            clie.estado = "Activo";
+           /* clie.estado = "Activo";
             clie.email = "Viviana.fernandez@gmail.com";
             clie.direccion = "San José,Guadalupe";
-            clie.telefono = "86596378";
+            clie.telefono = "86596378";*/
             return View(clie) ;
         }
     }

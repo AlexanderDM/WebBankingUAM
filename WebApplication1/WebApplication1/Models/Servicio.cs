@@ -12,15 +12,15 @@ namespace WebApplication1.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Transaccion
+    public partial class Servicio
     {
-        public int idTransaccion { get; set; }
-        public int cuentaOrigen { get; set; }
-        public int cuentaDestino { get; set; }
-        public int servicio { get; set; }
-        public byte[] fechaHora { get; set; }
+        public int idServicio { get; set; }
+        public string tipoServicio { get; set; }
+        public int idCuenta { get; set; }
+        public int identifidor { get; set; }
+        public string nombreServicio { get; set; }
+        public string estado { get; set; }
         public int monto { get; set; }
-        public string detalle { get; set; }
     
         public virtual Cuenta Cuenta { get; set; }
     }

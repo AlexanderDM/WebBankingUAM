@@ -1,0 +1,94 @@
+﻿@model WebApplication1.Models.Cliente
+
+
+
+@{
+    
+}
+
+<h2>Index</h2>
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        #login-div {
+            position: absolute;
+            left: 40%;
+            top: 40%;
+            border: 1px solid #ccc;
+            padding: 10px 10px;
+        }
+
+        .field-validation-error {
+            color: red
+        }
+    </style>
+
+</head>
+<body>
+    <div id="login">
+
+        @using (Html.BeginForm("Autorizar", "Login", FormMethod.Post))
+
+        {
+            <table>
+                <tr>
+
+                    <td></td>
+                    <td style="text-decoration:underline"> Web Banking</td>
+
+                </tr>
+
+                <tr>
+
+
+                <tr>
+                    <td>@Html.LabelFor(model => model.usuario)</td>
+                    <td>@Html.EditorFor(model => model.usuario)</td>
+
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>@Html.ValidationMessageFor(model => model.usuario)</td>
+
+                </tr>
+
+                <tr>
+                    <td>@Html.LabelFor(model => model.contrasena)</td>
+                    <td>@Html.EditorFor(model => model.contrasena)</td>
+
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td> <label class="field-validation-error">@Html.DisplayFor(model => model.loginMensajeError) </label> </td>
+
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>@Html.ValidationMessageFor(model => model.contrasena)</td>
+
+                </tr>
+
+                <tr>
+                    <td><input type="submit" name="name" value="Login" /> </td>
+
+                    <td>
+                        <input type="reset" name="name" value="clear" />
+                    </td>
+                </tr>
+
+            </table>
+        }
+
+    </div>
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

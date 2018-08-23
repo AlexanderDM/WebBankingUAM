@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApplication1.Models.Servicios>
+﻿@model IEnumerable<WebApplication1.Models.Servicio>
 
 @{
     ViewBag.Title = "Index";
@@ -12,16 +12,22 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.nombre)
+            @Html.DisplayNameFor(model => model.tipoServicio)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.compañia)
+            @Html.DisplayNameFor(model => model.identifidor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nombreServicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.estado)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.monto)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CuentaServicio.numCuenta)
+            @Html.DisplayNameFor(model => model.Cuenta.numCuenta)
         </th>
         <th></th>
     </tr>
@@ -29,21 +35,27 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.nombre)
+            @Html.DisplayFor(modelItem => item.tipoServicio)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.compañia)
+            @Html.DisplayFor(modelItem => item.identifidor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombreServicio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.estado)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.monto)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CuentaServicio.numCuenta)
+            @Html.DisplayFor(modelItem => item.Cuenta.numCuenta)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.idServicio }) |
             @Html.ActionLink("Details", "Details", new { id=item.idServicio }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idServicio })
+            @Html.ActionLink("CambiarEstado", "CambiarEstado", new { id=item.idServicio })
         </td>
     </tr>
 }

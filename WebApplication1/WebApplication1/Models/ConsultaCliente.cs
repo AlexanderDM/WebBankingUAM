@@ -8,15 +8,15 @@ namespace WebApplication1.Models
 {
     public class ConsultaCliente
     {
-        public WebBankingEntities6 contexto = new WebBankingEntities6();
+        public WebBankingEntities15 contexto = new WebBankingEntities15();
     
 
-    public Cliente ListadoClientes()
+    /*public ClienteBanco ListadoClientes()
     {
         try
         {
-            var sql = from clie in contexto.Cliente
-                      join cuen in contexto.Cuenta on clie.idCliente equals cuen.propietarioCuenta
+            var sql = from clie in contexto.ClienteBanco
+                      join cuen in contexto.Cuenta on clie.idCliente
                        
                        select clie ;
                 return sql.FirstOrDefault();
@@ -26,6 +26,6 @@ namespace WebApplication1.Models
             Console.WriteLine(e.StackTrace);
         }
         return null;
-    }
+    }*/
     }
 }

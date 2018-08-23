@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <<head>
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,7 @@
 
     <script src="/Scripts/modernizr-2.8.3.js"></script>
 
-</head></head>
+</head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -47,22 +47,25 @@
         </div>
     </div>
 
+    <div class="container">
+        <h1>Opciones Mantenimiento Clientes</h1>
+
+        <label> Seleccione la opcion a la que le desea dar mantenimiento </label>
         <div class="container">
-            <h1>Opciones Mantenimiento Clientes</h1>
 
-            <label> Seleccione la opcion a la que le desea dar mantenimiento </label>
-            <div class="container">
-
-                <a href="/Home/OpcCliente">Clientes</a>
-            </div>
-
-            <div clas>
-
-                @Html.ActionLink("Servicios","Index","Servicios") 
-            </div>
+            <a href="/Home/OpcCliente">Clientes</a>
         </div>
 
+        <div clas>
+
+            @Html.ActionLink("Servicios", "Index", "Servicios")
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 </body>
+
 </html>
 
 

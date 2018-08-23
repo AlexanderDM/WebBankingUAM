@@ -12,13 +12,12 @@ namespace WebApplication1.Controllers
 {
     public class CuentasController : Controller
     {
-        private WebBankingEntities6 db = new WebBankingEntities6();
+        private WebBankingEntities15 db = new WebBankingEntities15();
 
         // GET: Cuentas
         public ActionResult Index()
         {
-            var cuenta = db.Cuenta.Include(c => c.Banco1).Include(c => c.Cliente);
-            return View(cuenta.ToList());
+            return View(db.Cuenta.ToList());
         }
 
         // GET: Cuentas/Details/5
@@ -36,14 +35,9 @@ namespace WebApplication1.Controllers
             return View(cuenta);
         }
 
-        
-    
         // GET: Cuentas/Create
         public ActionResult Create()
         {
-            ViewBag.banco = new SelectList(db.Banco, "idBanco", "nombre");
-            ViewBag.propietarioCuenta = new SelectList(db.Cliente, "idCliente", "nombreCliente");
-
             return View();
         }
 
@@ -52,30 +46,15 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(string producto, string moneda, string oficina, string num, string digito,[Bind(Include = "idCuenta,numCuenta,banco,propietarioCuenta,saldo,estado,direccion")] Cuenta cuenta)
+        public ActionResult Create([Bind(Include = "idCuenta,numCuenta,saldo,estado")] Cuenta cuenta)
         {
-            string cuen_num = (producto + moneda + oficina + num + digito);
-            
-            Cuenta obj = new Cuenta();
-            obj.numCuenta =cuen_num;
-            obj.banco = cuenta.banco;
-            obj.propietarioCuenta = cuenta.propietarioCuenta;
-            obj.saldo = cuenta.saldo;
-            obj.estado = cuenta.estado;
-            obj.direccion = cuenta.direccion;
-
             if (ModelState.IsValid)
             {
-       
-                db.Cuenta.Add(obj);
-
+                db.Cuenta.Add(cuenta);
                 db.SaveChanges();
                 return RedirectToAction("Index");
-
             }
 
-            ViewBag.banco = new SelectList(db.Banco, "idBanco", "nombre", cuenta.banco);
-            ViewBag.propietarioCuenta = new SelectList(db.Cliente, "idCliente", "nombreCliente", cuenta.propietarioCuenta);
             return View(cuenta);
         }
 
@@ -91,8 +70,6 @@ namespace WebApplication1.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.banco = new SelectList(db.Banco, "idBanco", "nombre", cuenta.banco);
-            ViewBag.propietarioCuenta = new SelectList(db.Cliente, "idCliente", "nombreCliente", cuenta.propietarioCuenta);
             return View(cuenta);
         }
 
@@ -101,7 +78,7 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idCuenta,numCuenta,banco,propietarioCuenta,saldo,estado,direccion")] Cuenta cuenta)
+        public ActionResult Edit([Bind(Include = "idCuenta,numCuenta,saldo,estado")] Cuenta cuenta)
         {
             if (ModelState.IsValid)
             {
@@ -109,8 +86,6 @@ namespace WebApplication1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.banco = new SelectList(db.Banco, "idBanco", "nombre", cuenta.banco);
-            ViewBag.propietarioCuenta = new SelectList(db.Cliente, "idCliente", "nombreCliente", cuenta.propietarioCuenta);
             return View(cuenta);
         }
 

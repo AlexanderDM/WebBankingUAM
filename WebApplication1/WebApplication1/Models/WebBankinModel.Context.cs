@@ -13,10 +13,10 @@ namespace WebApplication1.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class WebBankingEntities6 : DbContext
+    public partial class WebBankingEntities15 : DbContext
     {
-        public WebBankingEntities6()
-            : base("name=WebBankingEntities6")
+        public WebBankingEntities15()
+            : base("name=WebBankingEntities15")
         {
         }
     
@@ -25,12 +25,10 @@ namespace WebApplication1.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Banco> Banco { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Cuenta> Cuenta { get; set; }
-        public virtual DbSet<CuentaServicio> CuentaServicio { get; set; }
-        public virtual DbSet<Servicios> Servicios { get; set; }
-        public virtual DbSet<Transaccion> Transaccion { get; set; }
-        public virtual DbSet<Usuarios> Usuarios { get; set; }
+        public virtual DbSet<CuentaPorCliente> CuentaPorCliente { get; set; }
+        public virtual DbSet<Servicio> Servicio { get; set; }
+        public virtual DbSet<Transferencia> Transferencia { get; set; }
     }
 }

@@ -20,15 +20,6 @@
         <th>
             @Html.DisplayNameFor(model => model.estado)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.direccion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Banco1.nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cliente.nombreCliente)
-        </th>
         <th></th>
     </tr>
 
@@ -44,18 +35,9 @@
             @Html.DisplayFor(modelItem => item.estado)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.direccion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Banco1.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cliente.nombreCliente)
-        </td>
-        <td>
-           
+            @Html.ActionLink("Edit", "Edit", new { id=item.idCuenta }) |
             @Html.ActionLink("Details", "Details", new { id=item.idCuenta }) |
-       
+           
         </td>
     </tr>
 }
