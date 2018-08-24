@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -42,9 +43,25 @@ namespace WebApplication1.Controllers
         // GET: Transferencias/Create
         public ActionResult Create()
         {
+
             ViewBag.idcliente = new SelectList(db.Cliente, "idCliente", "nombreCliente");
-            ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta");
-            //  ViewBag.idcuentaOrigen = new SelectList(db.CuentaPorCliente.Where(c => c.idCliente == transferencia.idcliente), "idCliente", "numCuenta", transferencia.idcuentaOrigen);
+            int i = (Int32)Session["idCliente"];
+
+
+            var sql = from clie in db.Cliente
+                      join CXC in db.CuentaPorCliente
+                      on clie.idCliente equals CXC.idCliente
+                      join cuen in db.Cuenta
+                      on CXC.idCuenta equals cuen.idCuenta
+                      where (clie.idCliente == (i))
+                      select new
+                      {
+                          Numcuenta = cuen.numCuenta,
+                          ciente = clie.idCliente,
+                          idcuenta = cuen.idCuenta
+                      };
+
+            ViewBag.idcuentaOrigen = new SelectList(sql, "idCuenta", "numCuenta");
             return View();
         }
 
@@ -72,7 +89,7 @@ namespace WebApplication1.Controllers
                     };
                 ViewBag.Cuentas = items;
 
-           
+
             }
             catch (Exception e)
             {
@@ -86,18 +103,11 @@ namespace WebApplication1.Controllers
         public ActionResult Create(string Nombre, [Bind(Include = "idTransferencia,idcliente,idcuentaOrigen,cuentaDestino,fechaHora,monto,detalle")] Transferencia transferencia)
         {
             Transferencia obj = new Transferencia();
-        /*    var items = new List<SelectListItem>();
-        
-            items = db.CuentaPorCliente.Select(c => new SelectListItem()
-            {
-                Text = c.idCliente.ToString(),
-                Value = c.idCuenta.ToString()
 
-            }).ToList();*/
 
             if (ModelState.IsValid)
             {
-            
+
                 db.Transferencia.Add(transferencia);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -105,9 +115,10 @@ namespace WebApplication1.Controllers
 
 
             ViewBag.idcliente = new SelectList(db.Cliente, "idCliente", "nombreCliente", transferencia.idcliente);
-            ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta", transferencia.idcuentaOrigen);
+            // ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta", transferencia.idcuentaOrigen);
             //ViewBag.idcuentaOrigen = ListadoClientesCuentas(transferencia.idcliente);
-           // ViewBag.idcuentaOrigen = items;
+            // ViewBag.idcuentaOrigen = items;
+
             return View(transferencia);
         }
 
@@ -141,7 +152,7 @@ namespace WebApplication1.Controllers
             }
             ViewBag.idcliente = new SelectList(db.Cliente, "idCliente", "nombreCliente", transferencia.idcliente);
             ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta", transferencia.idcuentaOrigen);
-          //  ViewBag.idcuentaOrigen = new SelectList(db.CuentaPorCliente.Where(c => c.idCliente == transferencia.idcliente), "idCliente", "numCuenta", transferencia.idcuentaOrigen);
+            //  ViewBag.idcuentaOrigen = new SelectList(db.CuentaPorCliente.Where(c => c.idCliente == transferencia.idcliente), "idCliente", "numCuenta", transferencia.idcuentaOrigen);
             return View(transferencia);
         }
 
@@ -159,8 +170,8 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.idcliente = new SelectList(db.Cliente, "idCliente", "nombreCliente", transferencia.idcliente);
-           ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta", transferencia.idcuentaOrigen);
-         //   ViewBag.idcuentaOrigen = new SelectList(db.CuentaPorCliente.Where(c => c.idCliente == transferencia.idcliente), "idCliente", "numCuenta", transferencia.idcuentaOrigen);
+            ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta", transferencia.idcuentaOrigen);
+            //   ViewBag.idcuentaOrigen = new SelectList(db.CuentaPorCliente.Where(c => c.idCliente == transferencia.idcliente), "idCliente", "numCuenta", transferencia.idcuentaOrigen);
             return View(transferencia);
         }
 
@@ -189,11 +200,50 @@ namespace WebApplication1.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult listaServicios()
+        {
+            return View();
+        }
+
+        public ActionResult Nince(string identificador)
+        {
+            Servicio obj = new Servicio();
+
+
+            return View();
+        }
+        
+     /*  public ActionResult Validar(int identificador)
+           
+        {
+
+        } */
+
+        public ActionResult ObtenerTipoServicio(String tipo)
+        {
+
+            return  RedirectToAction("Nince", "Transferencias") ;
+        }
         public ActionResult PagoServicio()
         {
+
             ViewBag.idcliente = new SelectList(db.Cliente, "idCliente", "nombreCliente");
+            int i = (Int32)Session["idCliente"];
+            var sql = from clie in db.Cliente
+                      join CXC in db.CuentaPorCliente
+                      on clie.idCliente equals CXC.idCliente
+                      join cuen in db.Cuenta
+                      on CXC.idCuenta equals cuen.idCuenta
+                      where (clie.idCliente == (i))
+                      select new
+                      {
+                          Numcuenta = cuen.numCuenta,
+                          ciente = clie.idCliente,
+                          idcuenta = cuen.idCuenta
+                      };
+
             //ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta")
-           //ViewBag.idcuentaOrigen = new SelectList(db.CuentaPorCliente.Where(c => c.idCliente == transferencia.idcliente), "idCuenta", "numCuenta", transferencia.idcuentaOrigen); ;
+            ViewBag.idcuentaOrigen = new SelectList(sql, "idCuenta", "numCuenta");
             return View();
         }
         [HttpPost]

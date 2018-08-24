@@ -45,11 +45,11 @@
                 @Html.ValidationMessageFor(model => model.idcliente, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        
         <div class="form-group">
             @Html.LabelFor(model => model.idcuentaOrigen, "Cuenta a debitar", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("idcuentaOrigen", ViewBag.idcuentaOrigen as IEnumerable<SelectListItem>)
+                @Html.DropDownList("idcuentaOrigen",null, new SelectList(ViewBag.idcuentaOrigen))
                 @Html.ValidationMessageFor(model => model.idcuentaOrigen, "", new { @class = "text-danger" })
             </div>
         </div>

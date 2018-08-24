@@ -1,0 +1,39 @@
+﻿@model WebApplication1.Models.Servicio
+
+@{
+    ViewBag.Title = "listaServicios";
+}
+
+<h2>listaServicios</h2>
+
+<div>
+    <h4>Servicio</h4>
+    <hr />
+    <div class="dl-horizontal">
+
+        <form action="ObtenerServicio" method="post">
+
+
+            <h3> Bienvenido al sistema de web Babking: @Session["nombreCliente"].ToString()</h3>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="TipoServicio">TipoServicio</label>
+                <div class="col-md-10">
+                    <select class="form-control" id="TipoServicio" name="TipoServicio">
+                        <option value="Agua">Agua</option>
+                        <option value="Luz">Luz</option>
+                        <option value="Telefono">Telefono</option>
+                    </select>
+
+
+                </div>
+            </div>
+
+            <input type="submit" name="response" value="Accept" formaction=@Url.Action("ObtenerTipoServicio") formmethod="post" class="btn btn-primary" />
+
+        </form>
+
+        
+
+    </div>
+</div>
+

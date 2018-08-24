@@ -161,12 +161,7 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult listaServicios()
-        {
-            return View();
-        }
-
-
+       
 
         protected override void Dispose(bool disposing)
         {

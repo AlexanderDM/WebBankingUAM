@@ -32,8 +32,10 @@ namespace WebApplication1.Controllers
                     {
                         if (UserDetails.tipoUsuario.Equals("Administrador"))
                         {
-                            Session["idCliente"] = UserDetails.idCliente;
-                            Session["nombreCliente"] = UserDetails.nombreCliente;
+                           Session["idCliente"] = UserDetails.idCliente;
+                        
+                            userModel.ObtenerId(UserDetails.idCliente);
+                           Session["nombreCliente"] = UserDetails.nombreCliente;
                             return RedirectToAction("Mantenimiento", "Home");
                         }
                         if (UserDetails.tipoUsuario.Equals("Usuario"))

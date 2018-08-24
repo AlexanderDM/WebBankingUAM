@@ -157,6 +157,7 @@
     <Compile Include="Content\App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ConsultasController.cs" />
+    <Compile Include="Controllers\CuentaPorClientesController.cs" />
     <Compile Include="Controllers\CuentasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -286,9 +287,14 @@
     <Content Include="Views\Transferencias\Index.cshtml" />
     <Content Include="Views\Home\RealizarTransferencias.cshtml" />
     <Content Include="Views\Clientes\ListadoClientes.cshtml" />
-    <Content Include="Views\Servicios\listaServicios.cshtml" />
+    <Content Include="Views\Transferencias\listaServicios.cshtml" />
     <Content Include="Views\Transferencias\PagoServicio.cshtml" />
     <Content Include="Views\Transferencias\Nince.cshtml" />
+    <Content Include="Views\CuentaPorClientes\Create.cshtml" />
+    <Content Include="Views\CuentaPorClientes\Delete.cshtml" />
+    <Content Include="Views\CuentaPorClientes\Details.cshtml" />
+    <Content Include="Views\CuentaPorClientes\Edit.cshtml" />
+    <Content Include="Views\CuentaPorClientes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
