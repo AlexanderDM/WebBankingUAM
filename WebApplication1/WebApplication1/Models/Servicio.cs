@@ -11,7 +11,7 @@ namespace WebApplication1.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
+    
     public partial class Servicio
     {
         public int idServicio { get; set; }
@@ -23,16 +23,5 @@ namespace WebApplication1.Models
         public int monto { get; set; }
     
         public virtual Cuenta Cuenta { get; set; }
-
-        public int ValidarServicio(string type)
-        {
-            using (WebBankingEntities15 db = new WebBankingEntities15())
-            {
-                var sql = from ser in db.Servicio
-                          where (ser.tipoServicio.Equals(type))
-                         select ser.idCuenta;
-                return sql.FirstOrDefault();
-            }
-    }
     }
 }

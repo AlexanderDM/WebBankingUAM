@@ -11,13 +11,13 @@ namespace WebApplication1.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-
+    
     public partial class Cliente
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cliente()
         {
+            this.CuentaPorCliente = new HashSet<CuentaPorCliente>();
             this.Transferencia = new HashSet<Transferencia>();
         }
     
@@ -32,17 +32,9 @@ namespace WebApplication1.Models
 
         public string loginMensajeError { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CuentaPorCliente> CuentaPorCliente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transferencia> Transferencia { get; set; }
-
-        public string ValidarUsuario()
-        {
-            using (WebBankingEntities15 db = new WebBankingEntities15())
-            {
-                var sql = from cli in db.Cliente
-                          where (cli.tipoUsuario.Equals("Administrador"))
-                          select cli.tipoUsuario;
-                return sql.FirstOrDefault();
-            }
-        }
     }
 }

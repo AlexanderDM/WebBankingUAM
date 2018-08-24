@@ -11,8 +11,7 @@ namespace WebApplication1.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-
+    
     public partial class Transferencia
     {
         public int idTransferencia { get; set; }
@@ -25,20 +24,5 @@ namespace WebApplication1.Models
     
         public virtual Cliente Cliente { get; set; }
         public virtual Cuenta Cuenta { get; set; }
-
-        public List<int> ConsultarCuentaCliente(int obj)
-        {
-            using (WebBankingEntities15 db = new WebBankingEntities15())
-            {
-                var sql = from clien in db.Cliente
-                          join cuen in db.CuentaPorCliente 
-                          on clien.idCliente equals cuen.idCliente
-                          where (clien.idCliente.Equals(obj))
-                          select cuen.idCuenta;
-
-                
-                return sql.ToList();
-            }
-        }
     }
 }

@@ -152,52 +152,50 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Content\App_Start\BundleConfig.cs" />
+    <Compile Include="Content\App_Start\FilterConfig.cs" />
+    <Compile Include="Content\App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\ConsultasController.cs" />
     <Compile Include="Controllers\CuentasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ServiciosController.cs" />
     <Compile Include="Controllers\TransferenciasController.cs" />
     <Compile Include="Datos\ClienteModel.cs" />
-    <Compile Include="Datos\Servicios.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Cliente.cs">
-      <DependentUpon>WebBankinModel.tt</DependentUpon>
+      <DependentUpon>WebBnakingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ConsultaCliente.cs" />
     <Compile Include="Models\Cuenta.cs">
-      <DependentUpon>WebBankinModel.tt</DependentUpon>
+      <DependentUpon>WebBnakingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CuentaPorCliente.cs">
-      <DependentUpon>WebBankinModel.tt</DependentUpon>
+      <DependentUpon>WebBnakingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\rOLE.cs" />
+    <Compile Include="Models\email.cs" />
     <Compile Include="Models\Servicio.cs">
-      <DependentUpon>WebBankinModel.tt</DependentUpon>
+      <DependentUpon>WebBnakingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Transferencia.cs">
-      <DependentUpon>WebBankinModel.tt</DependentUpon>
+      <DependentUpon>WebBnakingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\WebBankinModel.Context.cs">
+    <Compile Include="Models\WebBnakingModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WebBankinModel.Context.tt</DependentUpon>
+      <DependentUpon>WebBnakingModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\WebBankinModel.cs">
+    <Compile Include="Models\WebBnakingModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WebBankinModel.tt</DependentUpon>
+      <DependentUpon>WebBnakingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\WebBankinModel.Designer.cs">
+    <Compile Include="Models\WebBnakingModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WebBankinModel.edmx</DependentUpon>
+      <DependentUpon>WebBnakingModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -210,15 +208,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\WebBankinModel.Context.tt">
+    <Content Include="Models\WebBnakingModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WebBankinModel.edmx</DependentUpon>
-      <LastGenOutput>WebBankinModel.Context.cs</LastGenOutput>
+      <DependentUpon>WebBnakingModel.edmx</DependentUpon>
+      <LastGenOutput>WebBnakingModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\WebBankinModel.tt">
+    <Content Include="Models\WebBnakingModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WebBankinModel.edmx</DependentUpon>
-      <LastGenOutput>WebBankinModel.cs</LastGenOutput>
+      <DependentUpon>WebBnakingModel.edmx</DependentUpon>
+      <LastGenOutput>WebBnakingModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -228,12 +226,12 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
-    <EntityDeploy Include="Models\WebBankinModel.edmx">
+    <EntityDeploy Include="Models\WebBnakingModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WebBankinModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>WebBnakingModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\WebBankinModel.edmx.diagram">
-      <DependentUpon>WebBankinModel.edmx</DependentUpon>
+    <Content Include="Models\WebBnakingModel.edmx.diagram">
+      <DependentUpon>WebBnakingModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -286,10 +284,15 @@
     <Content Include="Views\Transferencias\Details.cshtml" />
     <Content Include="Views\Transferencias\Edit.cshtml" />
     <Content Include="Views\Transferencias\Index.cshtml" />
-    <Content Include="Views\Home\Transferencias.cshtml" />
+    <Content Include="Views\Home\RealizarTransferencias.cshtml" />
+    <Content Include="Views\Clientes\ListadoClientes.cshtml" />
+    <Content Include="Views\Servicios\listaServicios.cshtml" />
+    <Content Include="Views\Transferencias\PagoServicio.cshtml" />
+    <Content Include="Views\Transferencias\Nince.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Consultas\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -324,7 +327,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53568</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:53563/</IISUrl>
+          <IISUrl>http://localhost:53568/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

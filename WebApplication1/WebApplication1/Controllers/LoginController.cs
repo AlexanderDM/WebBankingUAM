@@ -17,7 +17,7 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public ActionResult Autorizar(Cliente userModel)
         {
-            using (WebBankingEntities15 db = new WebBankingEntities15())
+            using (WebBankingEntities16 db = new WebBankingEntities16())
             {
                 var UserDetails = db.Cliente.Where(x => x.usuario == userModel.usuario && x.contrasena == userModel.contrasena).FirstOrDefault();
 

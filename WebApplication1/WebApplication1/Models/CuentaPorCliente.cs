@@ -16,5 +16,10 @@ namespace WebApplication1.Models
     {
         public int idCliente { get; set; }
         public int idCuenta { get; set; }
+        public int cliente { get; set; }
+        public int cuenta { get; set; }
+    
+        public virtual Cliente Cliente1 { get; set; }
+        public virtual Cuenta Cuenta1 { get; set; }
     }
 }

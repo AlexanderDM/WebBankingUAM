@@ -12,13 +12,16 @@ namespace WebApplication1.Controllers
 {
     public class TransferenciasController : Controller
     {
-        private WebBankingEntities15 db = new WebBankingEntities15();
+        private WebBankingEntities16 db = new WebBankingEntities16();
+        public CuentaPorCliente CXC = new CuentaPorCliente();
 
-        // GET: Transferencias
         public ActionResult Index()
         {
             var transferencia = db.Transferencia.Include(t => t.Cliente).Include(t => t.Cuenta);
             return View(transferencia.ToList());
+
+
+
         }
 
         // GET: Transferencias/Details/5
@@ -41,30 +44,88 @@ namespace WebApplication1.Controllers
         {
             ViewBag.idcliente = new SelectList(db.Cliente, "idCliente", "nombreCliente");
             ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta");
+            //  ViewBag.idcuentaOrigen = new SelectList(db.CuentaPorCliente.Where(c => c.idCliente == transferencia.idcliente), "idCliente", "numCuenta", transferencia.idcuentaOrigen);
             return View();
         }
 
         // POST: Transferencias/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
+
+        public void GetListadoClientesCuentas(Cliente clie)
+        {
+            try
+            {
+                IEnumerable<Cliente> values = Enum.GetValues(typeof(Cliente))
+                    .Cast<Cliente>();
+
+                IEnumerable<SelectListItem> items =
+                    from value in values
+                    select new SelectListItem
+                    {
+                        Text = value.ToString(),
+
+                        Value = value.ToString(),
+
+                        Selected = value == clie,
+                    };
+                ViewBag.Cuentas = items;
+
+           
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
+
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idTransferencia,idcliente,idcuentaOrigen,cuentaDestino,fechaHora,monto,detalle")] Transferencia transferencia)
+        public ActionResult Create(string Nombre, [Bind(Include = "idTransferencia,idcliente,idcuentaOrigen,cuentaDestino,fechaHora,monto,detalle")] Transferencia transferencia)
         {
             Transferencia obj = new Transferencia();
-          //  obj.idcliente =transferencia.ConsultarCuentaCliente(transferencia.idcliente);
+        /*    var items = new List<SelectListItem>();
+        
+            items = db.CuentaPorCliente.Select(c => new SelectListItem()
+            {
+                Text = c.idCliente.ToString(),
+                Value = c.idCuenta.ToString()
+
+            }).ToList();*/
+
             if (ModelState.IsValid)
             {
+            
                 db.Transferencia.Add(transferencia);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+
             ViewBag.idcliente = new SelectList(db.Cliente, "idCliente", "nombreCliente", transferencia.idcliente);
-          //  ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta", transferencia.idcuentaOrigen);
-            ViewBag.idcuentaOrigen1 = new SelectList(db.CuentaPorCliente.Where(c =>c.idCliente == transferencia.idcliente), "idCuenta", "numCuenta", transferencia.idcuentaOrigen);
+            ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta", transferencia.idcuentaOrigen);
+            //ViewBag.idcuentaOrigen = ListadoClientesCuentas(transferencia.idcliente);
+           // ViewBag.idcuentaOrigen = items;
             return View(transferencia);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // GET: Transferencias/Edit/5
         public ActionResult Edit(int? id)
@@ -80,6 +141,7 @@ namespace WebApplication1.Controllers
             }
             ViewBag.idcliente = new SelectList(db.Cliente, "idCliente", "nombreCliente", transferencia.idcliente);
             ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta", transferencia.idcuentaOrigen);
+          //  ViewBag.idcuentaOrigen = new SelectList(db.CuentaPorCliente.Where(c => c.idCliente == transferencia.idcliente), "idCliente", "numCuenta", transferencia.idcuentaOrigen);
             return View(transferencia);
         }
 
@@ -97,7 +159,8 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.idcliente = new SelectList(db.Cliente, "idCliente", "nombreCliente", transferencia.idcliente);
-            ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta", transferencia.idcuentaOrigen);
+           ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta", transferencia.idcuentaOrigen);
+         //   ViewBag.idcuentaOrigen = new SelectList(db.CuentaPorCliente.Where(c => c.idCliente == transferencia.idcliente), "idCliente", "numCuenta", transferencia.idcuentaOrigen);
             return View(transferencia);
         }
 
@@ -125,6 +188,32 @@ namespace WebApplication1.Controllers
             db.Transferencia.Remove(transferencia);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        public ActionResult PagoServicio()
+        {
+            ViewBag.idcliente = new SelectList(db.Cliente, "idCliente", "nombreCliente");
+            //ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta")
+           //ViewBag.idcuentaOrigen = new SelectList(db.CuentaPorCliente.Where(c => c.idCliente == transferencia.idcliente), "idCuenta", "numCuenta", transferencia.idcuentaOrigen); ;
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PagoServicio([Bind(Include = "idTransferencia,idcliente,idcuentaOrigen,cuentaDestino,fechaHora,monto,detalle")] Transferencia transferencia)
+        {
+               //pago de un servicio es igual a una transferencia             
+            CuentaPorCliente obj = new CuentaPorCliente();
+            //  obj.idcliente =transferencia.ConsultarCuentaCliente(transferencia.idcliente);
+            if (ModelState.IsValid)
+            {
+                db.Transferencia.Add(transferencia);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.idcliente = new SelectList(db.Cliente, "idCliente", "nombreCliente", transferencia.idcliente);
+          // ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta", transferencia.idcuentaOrigen);
+        //  ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCliente", "numCuenta", transferencia.idcuentaOrigen);
+            return View(transferencia);
         }
 
         protected override void Dispose(bool disposing)

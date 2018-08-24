@@ -1,0 +1,48 @@
+﻿@model WebApplication1.Models.Cliente
+
+@{
+    ViewBag.Title = "ListadoClientes";
+}
+
+<h2>ListadoClientes</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nombreCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.numCuenta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.estado)
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model.listaCliente)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombreCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.numCuenta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.estado)
+            </td>
+
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.idCliente }) |
+                @Html.ActionLink("Details", "Details", new { id = item.idCliente }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.idCliente })
+            </td>
+        </tr>
+    }
+
+</table>

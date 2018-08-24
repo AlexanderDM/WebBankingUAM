@@ -8,11 +8,13 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
 
+
+
 namespace WebApplication1.Controllers
 {
     public class ClientesController : Controller
     {
-        private WebBankingEntities15 db = new WebBankingEntities15();
+        private WebBankingEntities16 db = new WebBankingEntities16();
 
         // GET: Clientes
         public ActionResult Index()
@@ -28,6 +30,7 @@ namespace WebApplication1.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Cliente cliente = db.Cliente.Find(id);
+           
             if (cliente == null)
             {
                 return HttpNotFound();
@@ -48,6 +51,10 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "idCliente,nombreCliente,usuario,identificacion,email,tipoUsuario,contrasena,estado")] Cliente cliente)
         {
+            Cliente obj = new Cliente();
+            obj.email = cliente.email;
+           // cliente.EnviarCorreoElectronicos(obj.email);
+            
             if (ModelState.IsValid)
             {
                 db.Cliente.Add(cliente);
@@ -151,15 +158,30 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public ActionResult AddOrEdit(int id=0)
-        {
-            Cliente clienteModel = new Cliente();
-            return View(clienteModel);
-        }
+      //  public ActionResult ListadoClientes()
+        //{
+
+
+            //  ClienteModel modelo = new ClienteModel();
+            //  modelo.cliente = new ConsultaCliente().ListadoClientes().ToList();
+            //  modelo.Cuenta = modelo.CXC.idCuenta; ;
+          /*  Cliente lisCliente = new Cliente();
+            lisCliente.listaCliente = (from clie in db.Cliente
+                                       join CXC in db.CuentaPorCliente
+                                       on clie.idCliente equals CXC.idCliente
+                                       join cuen in db.Cuenta
+                                       on CXC.idCuenta equals cuen.idCuenta
+                                       where (clie.estado.Equals("Activo"))
+
+                                       select new Cliente{ nombreCliente = clie.nombreCliente, numCuenta = cuen.numCuenta, estado = clie.estado }).ToList();
+
+
+            return View(lisCliente);*/
+       // }
         [HttpPost]
         public ActionResult AddOrEdit(Cliente clienteModel)
         {
-            using (WebBankingEntities15 bModel = new WebBankingEntities15()) 
+            using (WebBankingEntities16 bModel = new WebBankingEntities16()) 
             return View(clienteModel);
         }
 

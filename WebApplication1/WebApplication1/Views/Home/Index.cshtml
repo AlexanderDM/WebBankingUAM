@@ -27,17 +27,40 @@
                         <li><a href="/">Inicio</a></li>
                         <li><a href="/Home/About">Acerca de</a></li>
                         <li><a href="/Home/Contact">Contacto</a></li>
-                        <li><a href="/Transferencias/Create">Transferencias</a></li>
-                        <li><a href="~/Home/Transferencias">Prueba link transa</a></li>
-
-                    </ul>
+                        <li> <a href="@Url.Action("LogOut", "Login")">LogOut</a></li>
+                        </ul>
                 </div>
             </div>
         </div>
         <div>
             <h1> Dashboard</h1>
-            <h3>Usuario: @Session["nombreCliente"].ToString()</h3>
-            <a href="@Url.Action("LogOut", "Login")">LogOut</a>
+            <h3> Bienvenido al sistema de web Babking: @Session["nombreCliente"].ToString()</h3>
+
+
+            <div>
+
+                @Html.ActionLink("Listado Cliente", "ListadoClientes", "Clientes")
+            </div>
+
+            <div>
+
+                <div class="container">
+
+                    @Html.ActionLink("Lista Servicios", "listaServicios", "Servicios")
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="container">
+
+                    @Html.ActionLink("Transferenciass", "Create", "Transferencias")
+                </div>
+
+            </div>
+
+
         </div>
 
     </body>

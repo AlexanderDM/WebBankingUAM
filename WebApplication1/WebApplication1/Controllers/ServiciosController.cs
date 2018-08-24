@@ -12,7 +12,7 @@ namespace WebApplication1.Controllers
 {
     public class ServiciosController : Controller
     {
-        private WebBankingEntities15 db = new WebBankingEntities15();
+        private WebBankingEntities16 db = new WebBankingEntities16();
 
         // GET: Servicios
         public ActionResult Index()
@@ -53,7 +53,7 @@ namespace WebApplication1.Controllers
             Servicio obj = new Servicio();
 
             obj.tipoServicio = TipoServicio;
-            obj.idCuenta = servicio.ValidarServicio(TipoServicio);
+           // obj.idCuenta = servicio.ValidarServicio(TipoServicio);
             obj.identifidor = servicio.identifidor;
             obj.nombreServicio = servicio.nombreServicio;
             obj.estado = servicio.estado;
@@ -103,6 +103,38 @@ namespace WebApplication1.Controllers
             return View(servicio);
         }
 
+        public ActionResult CambiarEstado(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Servicio servicio = db.Servicio.Find(id);
+            if (servicio == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.idCuenta = new SelectList(db.Cuenta, "idCuenta", "numCuenta", servicio.idCuenta);
+            return View(servicio);
+        }
+
+        // POST: Servicios/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CambiarEstado([Bind(Include = "idServicio,tipoServicio,idCuenta,identifidor,nombreServicio,estado,monto")] Servicio servicio)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(servicio).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.idCuenta = new SelectList(db.Cuenta, "idCuenta", "numCuenta", servicio.idCuenta);
+            return View(servicio);
+        }
+
         // GET: Servicios/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -128,6 +160,13 @@ namespace WebApplication1.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public ActionResult listaServicios()
+        {
+            return View();
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {
