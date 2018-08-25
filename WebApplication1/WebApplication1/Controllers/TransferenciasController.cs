@@ -248,10 +248,13 @@ namespace WebApplication1.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult PagoServicio([Bind(Include = "idTransferencia,idcliente,idcuentaOrigen,cuentaDestino,fechaHora,monto,detalle")] Transferencia transferencia)
+        public ActionResult PagoServicio(int identificador,[Bind(Include = "idTransferencia,idcliente,idcuentaOrigen,cuentaDestino,fechaHora,monto,detalle")] Transferencia transferencia)
         {
+
+            Servicio obj = new Servicio();
+            obj.identifidor = identificador;
                //pago de un servicio es igual a una transferencia             
-            CuentaPorCliente obj = new CuentaPorCliente();
+          //  CuentaPorCliente obj = new CuentaPorCliente();
             //  obj.idcliente =transferencia.ConsultarCuentaCliente(transferencia.idcliente);
             if (ModelState.IsValid)
             {
