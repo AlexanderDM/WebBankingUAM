@@ -224,12 +224,13 @@ namespace WebApplication1.Controllers
 
             return  RedirectToAction("Nince", "Transferencias") ;
         }
-        public ActionResult PagoServicio()
+        [HttpPost]
+        public ActionResult PagoServicio(string TipoServicio)
         {
 
             ViewBag.idcliente = new SelectList(db.Cliente, "idCliente", "nombreCliente");
             int i = (Int32)Session["idCliente"];
-            var sql = from clie in db.Cliente
+            var numCuentaCliente = from clie in db.Cliente
                       join CXC in db.CuentaPorCliente
                       on clie.idCliente equals CXC.idCliente
                       join cuen in db.Cuenta
@@ -242,17 +243,35 @@ namespace WebApplication1.Controllers
                           idcuenta = cuen.idCuenta
                       };
 
-            //ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta")
-            ViewBag.idcuentaOrigen = new SelectList(sql, "idCuenta", "numCuenta");
+            var numCuentaServicio = from ser in db.Servicio
+                                    join cue in db.Cuenta
+                                    on ser.idCuenta equals cue.idCuenta
+
+                                    where (ser.tipoServicio == ("Agua"))
+                                    select new
+                                    {
+                                        Numcuenta = cue.numCuenta,
+                                        idcuenta = cue.idCuenta
+
+                                    };
+
+           
+            ViewBag.tipoServicio = new SelectList(db.Servicio, "idServicio", "tipoServicio");
+            ViewBag.cuentaDestino = new SelectList(numCuentaCliente, "idCuenta", "numCuenta");
+
+            ViewBag.idcuentaOrigen = new SelectList(numCuentaServicio, "idCuenta", "numCuenta");
+          
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult PagoServicio(int identificador,[Bind(Include = "idTransferencia,idcliente,idcuentaOrigen,cuentaDestino,fechaHora,monto,detalle")] Transferencia transferencia)
+        public ActionResult PagoServicio(string TipoServicio ,[Bind(Include = "idTransferencia,idcliente,idcuentaOrigen,cuentaDestino,fechaHora,monto,detalle")] Transferencia transferencia)
         {
 
             Servicio obj = new Servicio();
-            obj.identifidor = identificador;
+            //var id = obj.ValidarServicio(TipoServicio);
+            //var idcuenta= 
+                   
                //pago de un servicio es igual a una transferencia             
           //  CuentaPorCliente obj = new CuentaPorCliente();
             //  obj.idcliente =transferencia.ConsultarCuentaCliente(transferencia.idcliente);
@@ -262,10 +281,12 @@ namespace WebApplication1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+          
 
             ViewBag.idcliente = new SelectList(db.Cliente, "idCliente", "nombreCliente", transferencia.idcliente);
-          // ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta", transferencia.idcuentaOrigen);
-        //  ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCliente", "numCuenta", transferencia.idcuentaOrigen);
+           
+            // ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta", transferencia.idcuentaOrigen);
+            //  ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCliente", "numCuenta", transferencia.idcuentaOrigen);
             return View(transferencia);
         }
 

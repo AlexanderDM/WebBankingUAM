@@ -177,6 +177,7 @@
       <DependentUpon>WebBnakingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\email.cs" />
+    <Compile Include="Models\ModelServicioTrans.cs" />
     <Compile Include="Models\Servicio.cs">
       <DependentUpon>WebBnakingModel.tt</DependentUpon>
     </Compile>

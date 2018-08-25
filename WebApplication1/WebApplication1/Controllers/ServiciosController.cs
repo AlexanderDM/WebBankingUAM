@@ -53,7 +53,7 @@ namespace WebApplication1.Controllers
             Servicio obj = new Servicio();
 
             obj.tipoServicio = TipoServicio;
-           // obj.idCuenta = servicio.ValidarServicio(TipoServicio);
+            obj.idCuenta = servicio.ValidarServicio(TipoServicio);
             obj.identifidor = servicio.identifidor;
             obj.nombreServicio = servicio.nombreServicio;
             obj.estado = servicio.estado;

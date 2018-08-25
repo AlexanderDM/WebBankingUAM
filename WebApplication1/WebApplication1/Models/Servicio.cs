@@ -36,17 +36,17 @@ namespace WebApplication1.Models
                 return sql.FirstOrDefault();
             }
         }
-        public int BuscarIdentificador(string inde)
+        public int BuscarIdentificador(int inde)
         {
             using (WebBankingEntities16 db = new WebBankingEntities16())
             {
                 var sql = from ser in db.Servicio
                           join cuen in db.Cuenta
                           on ser.idCuenta equals cuen.idCuenta
-                          where (ser.tipoServicio.Equals(inde))
-                          select ser.identifidor
+                          where (ser.identifidor.Equals(inde))
+                          select ser.identifidor;
                   
-                          ;
+                         
                 return sql.FirstOrDefault();
             }
         }

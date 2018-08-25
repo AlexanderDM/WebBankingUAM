@@ -1,4 +1,4 @@
-﻿@model WebApplication1.Models.Transferencia
+﻿@model WebApplication1.Models.ModelServicioTrans
 
 @{
     ViewBag.Title = "PagoServicio";
@@ -6,72 +6,90 @@
 
 <h2>PagoServicio</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm(FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-         <h3> Bienvenido al sistema de web Babking: @Session["nombreCliente"].ToString()</h3>
-        <h4>Pago de servicios</h4>
 
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.HiddenFor(model => model.idcliente, "idcliente")
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.idcliente, htmlAttributes: new { @class = "form-control", @Hidden=true })
-                @Html.ValidationMessageFor(model => model.idcliente, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="form-horizontal">
+    <h3> Bienvenido al sistema de web Babking: @Session["nombreCliente"].ToString()</h3>
+    <h4>Pago de servicios</h4>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.idcuentaOrigen, "idcuentaOrigen", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("idcuentaOrigen", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.idcuentaOrigen, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.cuentaDestino, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.cuentaDestino, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.cuentaDestino, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.fechaHora, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.fechaHora, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.fechaHora, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.monto, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.monto, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.monto, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.detalle, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.detalle, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.detalle, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Procesar Pago" class="btn btn-default" />
-            </div>
+        @Html.HiddenFor(model => model.transferencia.idcliente, "NombreCliente")
+        <div class="col-md-10">
+            @Html.LabelForModel(@Session["nombreCliente"].ToString(), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.transferencia.idcliente, "", new { @class = "text-danger" })
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <div class="form-group">
+        @Html.LabelFor(model => model.servicio.tipoServicio, "Tipo Servicio", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("tipoServicio", null, new SelectList(ViewBag.tipoServicio))
+            @Html.ValidationMessageFor(model => model.servicio.tipoServicio, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.transferencia.idcuentaOrigen, "Cuenta a debitar", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("idcuentaOrigen", null, new SelectList(ViewBag.idcuentaOrigen))
+            @Html.ValidationMessageFor(model => model.transferencia.idcuentaOrigen, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.transferencia.cuentaDestino, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("cuentaDestino", null, new SelectList(ViewBag.cuentaDestino))
+            @Html.ValidationMessageFor(model => model.transferencia.cuentaDestino, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.servicio.identifidor, "identificador", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.servicio.identifidor, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.servicio.identifidor, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.HiddenFor(model => model.transferencia.fechaHora, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.HiddenFor(model => model.transferencia.fechaHora, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.transferencia.fechaHora, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-md-10">
+            @Html.EditorForModel("monto", null, new SelectList(ViewBag.idcuentaOrigen))
+            @Html.ValidationMessageFor(model => model.transferencia.monto, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.transferencia.detalle, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.transferencia.detalle, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.transferencia.detalle, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Procesar Pago" class="btn btn-default" />
+        </div>
+    </div>
 </div>
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
