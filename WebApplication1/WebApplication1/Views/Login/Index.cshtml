@@ -2,8 +2,8 @@
 @{
     
 }
-
-<h2>Index</h2>
+<h2>BVAM Web Banking</h2>
+<h3>Inicio de sesión</h3>
 
 <!DOCTYPE html>
 <html>
@@ -32,19 +32,13 @@
         @using (Html.BeginForm("Autorizar", "Login", FormMethod.Post))
 
         {
-            <table>
-                <tr>
-
-                    <td></td>
-                    <td style="text-decoration:underline"> Web Banking</td>
-
-                </tr>
+            <table>                
 
                 <tr>
 
 
                 <tr>
-                    <td>@Html.LabelFor(model => model.usuario)</td>
+                    <td>@Html.LabelFor(model => model.usuario, "Usuario")</td>
                     <td>@Html.EditorFor(model => model.usuario)</td>
 
                 </tr>
@@ -55,7 +49,7 @@
                 </tr>
 
                 <tr>
-                    <td>@Html.LabelFor(model => model.contrasena)</td>
+                    <td>@Html.LabelFor(model => model.contrasena, "Contraseña")</td>
                     <td>@Html.EditorFor(model => model.contrasena)</td>
 
                 </tr>
@@ -72,10 +66,10 @@
                 </tr>
 
                 <tr>
-                    <td><input type="submit" name="name" value="Login" /> </td>
+                    <td><input type="submit" name="name" value="Ingresar" /> </td>
 
                     <td>
-                        <input type="reset" name="name" value="clear" />
+                        <input type="reset" name="name" value="Borrar" />
                     </td>
                 </tr>
 

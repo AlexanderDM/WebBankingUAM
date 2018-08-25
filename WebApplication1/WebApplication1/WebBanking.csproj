@@ -168,36 +168,35 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Cliente.cs">
-      <DependentUpon>WebBnakingModel.tt</DependentUpon>
+      <DependentUpon>ModelWeb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Cuenta.cs">
-      <DependentUpon>WebBnakingModel.tt</DependentUpon>
+      <DependentUpon>ModelWeb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CuentaPorCliente.cs">
-      <DependentUpon>WebBnakingModel.tt</DependentUpon>
+      <DependentUpon>ModelWeb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\email.cs" />
-    <Compile Include="Models\ModelServicioTrans.cs" />
+    <Compile Include="Models\ModelWeb.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelWeb.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelWeb.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelWeb.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelWeb.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Servicio.cs">
-      <DependentUpon>WebBnakingModel.tt</DependentUpon>
+      <DependentUpon>ModelWeb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Transferencia.cs">
-      <DependentUpon>WebBnakingModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WebBnakingModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WebBnakingModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WebBnakingModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WebBnakingModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WebBnakingModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WebBnakingModel.edmx</DependentUpon>
+      <DependentUpon>ModelWeb.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -210,15 +209,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\WebBnakingModel.Context.tt">
+    <Content Include="Models\ModelWeb.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WebBnakingModel.edmx</DependentUpon>
-      <LastGenOutput>WebBnakingModel.Context.cs</LastGenOutput>
+      <DependentUpon>ModelWeb.edmx</DependentUpon>
+      <LastGenOutput>ModelWeb.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\WebBnakingModel.tt">
+    <Content Include="Models\ModelWeb.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WebBnakingModel.edmx</DependentUpon>
-      <LastGenOutput>WebBnakingModel.cs</LastGenOutput>
+      <DependentUpon>ModelWeb.edmx</DependentUpon>
+      <LastGenOutput>ModelWeb.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -228,12 +227,12 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
-    <EntityDeploy Include="Models\WebBnakingModel.edmx">
+    <EntityDeploy Include="Models\ModelWeb.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WebBnakingModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>ModelWeb.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\WebBnakingModel.edmx.diagram">
-      <DependentUpon>WebBnakingModel.edmx</DependentUpon>
+    <Content Include="Models\ModelWeb.edmx.diagram">
+      <DependentUpon>ModelWeb.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

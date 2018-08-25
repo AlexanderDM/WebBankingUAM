@@ -24,24 +24,19 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="/">Inicio</a></li>
+                        <li><a href="/Home">Inicio</a></li>
                         <li><a href="/Home/About">Acerca de</a></li>
                         <li><a href="/Home/Contact">Contacto</a></li>
-                        <li> <a href="@Url.Action("LogOut", "Login")">LogOut</a></li>
+                        <li> <a href="@Url.Action("LogOut", "Login")">Salir</a></li>
                         </ul>
                 </div>
             </div>
         </div>
         <div>
             
-            <h3> Bienvenido al sistema de web Babking: @Session["nombreCliente"].ToString()</h3>
+            <h3> Bienvenido al sistema de web Banking: @Session["nombreCliente"].ToString()</h3>
 
-
-            <div>
-
-                @Html.ActionLink("Listado Cliente", "ListadoClientes", "Clientes")
-            </div>
-
+                        
             <div>
 
                 <div class="container">

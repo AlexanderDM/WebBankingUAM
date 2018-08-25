@@ -17,7 +17,7 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public ActionResult Autorizar(Cliente userModel)
         {
-            using (WebBankingEntities16 db = new WebBankingEntities16())
+            using (WebBankingEntities17 db = new WebBankingEntities17())
             {
                 var UserDetails = db.Cliente.Where(x => x.usuario == userModel.usuario && x.contrasena == userModel.contrasena).FirstOrDefault();
 
@@ -34,14 +34,16 @@ namespace WebApplication1.Controllers
                         {
                            Session["idCliente"] = UserDetails.idCliente;
                         
-                            userModel.ObtenerId(UserDetails.idCliente);
-                           Session["nombreCliente"] = UserDetails.nombreCliente;
+                            //userModel.ObtenerId(UserDetails.idCliente);
+                            Session["nombreCliente"] = UserDetails.nombreCliente;
+                            Session["email"] = UserDetails.email;
                             return RedirectToAction("Mantenimiento", "Home");
                         }
                         if (UserDetails.tipoUsuario.Equals("Usuario"))
                         {
                             Session["idCliente"] = UserDetails.idCliente;
                             Session["nombreCliente"] = UserDetails.nombreCliente;
+                            Session["email"] = UserDetails.email;
                             return RedirectToAction("Index", "Home");
                                 
                         }
@@ -49,6 +51,7 @@ namespace WebApplication1.Controllers
                     }//enviar mensaje de que esta inactivo
                     Session["idCliente"] = UserDetails.idCliente;
                     Session["nombreCliente"] = UserDetails.nombreCliente;
+                    Session["email"] = UserDetails.email;                    
                     return RedirectToAction("Index", "login");
                 }
             }

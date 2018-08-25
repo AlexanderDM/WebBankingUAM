@@ -14,7 +14,7 @@ namespace WebApplication1.Controllers
 {
     public class ClientesController : Controller
     {
-        private WebBankingEntities16 db = new WebBankingEntities16();
+        private WebBankingEntities17 db = new WebBankingEntities17();
 
         // GET: Clientes
         public ActionResult Index()
@@ -181,7 +181,7 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public ActionResult AddOrEdit(Cliente clienteModel)
         {
-            using (WebBankingEntities16 bModel = new WebBankingEntities16()) 
+            using (WebBankingEntities17 bModel = new WebBankingEntities17()) 
             return View(clienteModel);
         }
 

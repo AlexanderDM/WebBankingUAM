@@ -13,7 +13,7 @@ namespace WebApplication1.Controllers
 {
     public class TransferenciasController : Controller
     {
-        private WebBankingEntities16 db = new WebBankingEntities16();
+        private WebBankingEntities17 db = new WebBankingEntities17();
         public CuentaPorCliente CXC = new CuentaPorCliente();
 
         public ActionResult Index()
@@ -104,39 +104,63 @@ namespace WebApplication1.Controllers
         {
             Transferencia obj = new Transferencia();
 
+            String format = "dd mm yyyy hh:mm tt";
+            //var dat = new DateTime.Now;
+            DateTime date = DateTime.Now;
+            // Display the result string. 
+            Console.WriteLine(date.ToString(format));
+            int i = (Int32)Session["idCliente"];
+
+            obj.idcliente = i;
+            obj.idcuentaOrigen = transferencia.idcuentaOrigen;
+            obj.cuentaDestino= transferencia.cuentaDestino;
+            transferencia.fechaHora = date;
+            obj.fechaHora = transferencia.fechaHora;
+            obj.monto = transferencia.monto;
+            obj.detalle = transferencia.detalle;
+
+            int valor;
+            int.TryParse(transferencia.cuentaDestino, out valor);
+            //obj.ActualizarCuentas(i, transferencia.idcuentaOrigen, valor, transferencia.monto);
 
             if (ModelState.IsValid)
             {
 
-                db.Transferencia.Add(transferencia);
+                db.Transferencia.Add(obj);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            
+
+
+            var sql = from clie in db.Cliente
+                      join CXC in db.CuentaPorCliente
+                      on clie.idCliente equals CXC.idCliente
+                      join cuen in db.Cuenta
+                      on CXC.idCuenta equals cuen.idCuenta
+                      where (clie.idCliente == (i))
+                      select new
+                      {
+                          Numcuenta = cuen.numCuenta,
+                          ciente = clie.idCliente,
+                          idcuenta = cuen.idCuenta
+                      };
+            string dir = Session["email"].ToString();
+            obj.EnviarCorreoElectronicos(dir, transferencia.idcuentaOrigen.ToString(), transferencia.cuentaDestino, transferencia.monto, transferencia.detalle, 1);
+            obj.EnviarCorreoElectronicos(dir, transferencia.idcuentaOrigen.ToString(), transferencia.cuentaDestino, transferencia.monto, transferencia.detalle, 2);                                
+
+            ViewBag.idcuentaOrigen = new SelectList(sql, "idCuenta", "numCuenta");
 
 
             ViewBag.idcliente = new SelectList(db.Cliente, "idCliente", "nombreCliente", transferencia.idcliente);
             // ViewBag.idcuentaOrigen = new SelectList(db.Cuenta, "idCuenta", "numCuenta", transferencia.idcuentaOrigen);
             //ViewBag.idcuentaOrigen = ListadoClientesCuentas(transferencia.idcliente);
             // ViewBag.idcuentaOrigen = items;
-
+           
             return View(transferencia);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
 
         // GET: Transferencias/Edit/5
         public ActionResult Edit(int? id)

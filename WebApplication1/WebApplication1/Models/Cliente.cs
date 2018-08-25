@@ -11,7 +11,7 @@ namespace WebApplication1.Models
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class Cliente
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,7 +20,7 @@ namespace WebApplication1.Models
             this.CuentaPorCliente = new HashSet<CuentaPorCliente>();
             this.Transferencia = new HashSet<Transferencia>();
         }
-
+    
         public int idCliente { get; set; }
         public string nombreCliente { get; set; }
         public string usuario { get; set; }
@@ -29,22 +29,12 @@ namespace WebApplication1.Models
         public string tipoUsuario { get; set; }
         public string contrasena { get; set; }
         public string estado { get; set; }
-
         public string loginMensajeError { get; set; }
+               
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CuentaPorCliente> CuentaPorCliente { get; set; }
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transferencia> Transferencia { get; set; }
-
-        public int SessionID { get; set; }
-
-        public int ObtenerId(int id)
-        {
-            SessionID = id;
-
-            return SessionID;
-        }
-
-    
     }
 }
